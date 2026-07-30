@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ADHD Toolkit — навигатор навыков</title>
 <meta name="description" content="Интерактивный навигатор навыков при СДВГ: выбери проблему, получи конкретный навык с инструкцией «Что делать» и объяснением «Почему работает». Таблица эмоций и когнитивные ловушки.">
+<link rel="icon" type="image/png" href="favicon.png">
 <style>
 :root{
   --bg:#f8f9fa; --card:#ffffff; --border:#e0e0e0;
@@ -35,6 +36,9 @@ header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
 }
 .hero-photos img:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 6px 18px rgba(15,52,96,.12)}
 @media(max-width:520px){.hero-photos img{width:96px;height:96px}}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:12px}
+.logo-row img{height:56px;width:auto}
+@media(max-width:520px){.logo-row img{height:44px}}
 
 /* ===== Tabs ===== */
 .tabbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 26px}
@@ -149,7 +153,10 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
       <img src="fox1.jpg" alt="Лисёнок сидит на столе">
       <img src="fox2.jpg" alt="Лисёнок играет с верёвочками">
     </div>
-    <h1>🧠 ADHD Toolkit</h1>
+    <div class="logo-row">
+      <img src="sobol-logo.png" alt="Соболь-босс с бабочкой — логотип ADHD Toolkit">
+      <h1>ADHD Toolkit</h1>
+    </div>
     <p>Навигатор навыков · Таблица эмоций · Когнитивные ловушки</p>
   </header>
 
