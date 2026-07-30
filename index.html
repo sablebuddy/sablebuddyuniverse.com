@@ -28,6 +28,13 @@ body{
 header{padding:28px 0 18px;text-align:center}
 header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
 header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
+.hero-photos{display:flex;justify-content:center;gap:14px;margin-bottom:16px}
+.hero-photos img{
+  width:120px;height:120px;object-fit:cover;border-radius:16px;
+  border:2px solid var(--border);transition:all 0.2s ease;
+}
+.hero-photos img:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 6px 18px rgba(15,52,96,.12)}
+@media(max-width:520px){.hero-photos img{width:96px;height:96px}}
 
 /* ===== Tabs ===== */
 .tabbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 26px}
@@ -138,6 +145,10 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
 <body>
 <div class="wrap">
   <header>
+    <div class="hero-photos">
+      <img src="fox1.jpg" alt="Лисёнок сидит на столе">
+      <img src="fox2.jpg" alt="Лисёнок играет с верёвочками">
+    </div>
     <h1>🧠 ADHD Toolkit</h1>
     <p>Навигатор навыков · Таблица эмоций · Когнитивные ловушки</p>
   </header>
