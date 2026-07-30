@@ -39,6 +39,13 @@ header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
 .logo-row{display:flex;align-items:center;justify-content:center;gap:12px}
 .logo-row img{height:56px;width:auto}
 @media(max-width:520px){.logo-row img{height:44px}}
+.card .c-img{
+  display:block; height:110px; width:auto; max-width:100%;
+  object-fit:contain; margin:0 auto 10px;
+  transition:transform 0.2s ease;
+}
+.card:hover .c-img{transform:scale(1.06)}
+@media(max-width:520px){.card .c-img{height:96px}}
 
 /* ===== Tabs ===== */
 .tabbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 26px}
@@ -209,12 +216,38 @@ const el = (tag, cls, text) => {
 };
 const esc = s => s; // textContent используется везде — HTML-инъекций нет
 
-/* Эмодзи для категорий проблем */
-const CAT_EMOJI = {
-  'Не могу начать':'🚀','Залипаю и не могу остановиться':'🧲','"Надо" блокирует':'🚧',
-  'Отвлекаюсь':'🦋','Все забываю':'🧾','Все сразу':'🌪️','Не чувствую время':'⏳','Бардак вокруг':'🗂️',
-  'Эмоции скачут':'🎢','Боюсь отказа и критики (RSD)':'💔','Стыжусь себя':'🙈','Нет сил':'🔋','Кручу мысли по кругу':'🌀',
-  'Конфликты в отношениях':'⚡','Уже все понял, а он треплет':'⏩','Перебиваю и выпаливаю':'💬'
+/* Картинки-соболи для зон и категорий */
+const ZONE_IMG = {
+  'Запуск и торможение':'cards/zone1_zapusk.png',
+  'Фокус и хаос':'cards/zone2_fokus.png',
+  'Эмоции и энергия':'cards/zone3_emocii.png',
+  'Общение':'cards/zone4_obschenie.png'
+};
+const CAT_IMG = {
+  'Не могу начать':'cards/cat01_nemogu.png',
+  'Залипаю и не могу остановиться':'cards/cat02_zalipaju.png',
+  '"Надо" блокирует':'cards/cat03_nado.png',
+  'Отвлекаюсь':'cards/cat04_otvlek.png',
+  'Все забываю':'cards/cat05_zabivaju.png',
+  'Все сразу':'cards/cat06_vsesrazu.png',
+  'Не чувствую время':'cards/cat07_vremja.png',
+  'Бардак вокруг':'cards/cat08_bardak.png',
+  'Эмоции скачут':'cards/cat09_emoskach.png',
+  'Боюсь отказа и критики (RSD)':'cards/cat10_rsd.png',
+  'Стыжусь себя':'cards/cat11_styd.png',
+  'Нет сил':'cards/cat12_netsil.png',
+  'Кручу мысли по кругу':'cards/cat13_misli.png',
+  'Конфликты в отношениях':'cards/cat14_konflikt.png',
+  'Уже все понял, а он треплет':'cards/cat15_ponjal.png',
+  'Перебиваю и выпаливаю':'cards/cat16_perebivaju.png'
+};
+const sobolImg = (src, alt) => {
+  const img = document.createElement('img');
+  img.className = 'c-img';
+  img.src = src;
+  img.alt = alt;
+  img.loading = 'lazy';
+  return img;
 };
 
 /* ================= Табы ================= */
@@ -231,7 +264,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 const zonesGrid = $('#zones-grid');
 DATA.zones.forEach((zone, zi) => {
   const card = el('div', 'card');
-  card.appendChild(el('span', 'c-emoji', zone.emoji));
+  card.appendChild(sobolImg(ZONE_IMG[zone.name], zone.name));
   card.appendChild(el('div', 'c-title', zone.name));
   card.appendChild(el('div', 'c-sub', zone.categories.map(c => c.name).join(' / ')));
   card.addEventListener('click', () => openZone(zi));
@@ -251,7 +284,7 @@ function openZone(zi) {
   zone.categories.forEach(cat => {
     const selftalkAll = [...new Set(cat.problems.flatMap(p => p.selftalk))];
     const card = el('div', 'card');
-    card.appendChild(el('span', 'c-emoji', CAT_EMOJI[cat.name] || '▫️'));
+    card.appendChild(sobolImg(CAT_IMG[cat.name], cat.name));
     card.appendChild(el('div', 'c-title', cat.name));
     card.appendChild(el('div', 'c-selftalk', selftalkAll.join(' / ')));
     card.addEventListener('click', () => {
