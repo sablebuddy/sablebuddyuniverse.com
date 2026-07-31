@@ -47,6 +47,14 @@ header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
 .card:hover .c-img{transform:scale(1.06)}
 @media(max-width:520px){.card .c-img{height:96px}}
 
+
+.preface{
+  background:var(--card); border:1px solid var(--border); border-radius:14px;
+  padding:16px 18px; margin:0 0 6px; text-align:left;
+}
+.preface p{font-size:0.9rem; line-height:1.65; color:var(--text); margin:0}
+.preface p + p{margin-top:10px}
+
 /* ===== Tabs ===== */
 .tabbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 26px}
 .tab-btn{
@@ -175,6 +183,11 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
     <p>Навигатор навыков · Таблица эмоций · Когнитивные ловушки</p>
   </header>
 
+  <section class="preface" id="preface">
+    <p id="preface-1"></p>
+    <p id="preface-2"></p>
+  </section>
+
   <nav class="tabbar" role="tablist">
     <button class="tab-btn active" data-tab="navigator" role="tab" id="tabbtn-navigator">🧭 Навигатор</button>
     <button class="tab-btn" data-tab="emotions" role="tab" id="tabbtn-emotions">🎭 Эмоции</button>
@@ -218,6 +231,7 @@ const ZONE_IMG = {"zapusk": "cards/zone1_zapusk.png", "fokus": "cards/zone2_foku
 const CAT_IMG = {"nemogu": "cards/cat01_nemogu.png", "zalipaju": "cards/cat02_zalipaju.png", "nado": "cards/cat03_nado.png", "otvlek": "cards/cat04_otvlek.png", "zabivaju": "cards/cat05_zabivaju.png", "vsesrazu": "cards/cat06_vsesrazu.png", "vremja": "cards/cat07_vremja.png", "bardak": "cards/cat08_bardak.png", "emoskach": "cards/cat09_emoskach.png", "rsd": "cards/cat10_rsd.png", "styd": "cards/cat11_styd.png", "netsil": "cards/cat12_netsil.png", "misli": "cards/cat13_misli.png", "konflikt": "cards/cat14_konflikt.png", "ponjal": "cards/cat15_ponjal.png", "perebivaju": "cards/cat16_perebivaju.png"};
 </script>
 <script>
+
 /* ================= Helpers ================= */
 const $ = (sel, root) => (root||document).querySelector(sel);
 const el = (tag, cls, text) => {
@@ -234,6 +248,8 @@ const UI = {
     title: 'ADHD Toolkit — навигатор навыков',
     metaDesc: 'Интерактивный навигатор навыков при СДВГ: выбери проблему, получи конкретный навык с инструкцией «Что делать» и объяснением «Почему работает». Таблица эмоций и когнитивные ловушки.',
     subtitle: 'Навигатор навыков · Таблица эмоций · Когнитивные ловушки',
+    preface1: 'ADHD — это спектр. Не переключатель «есть/нет», а шкала. Какие-то черты из этого спектра есть у каждого: кто-то хуже чувствует время, кто-то не может начать скучную задачу, кто-то взрывается от критики. У одних это пара знакомых моментов, у других — полный набор на максимальной громкости. Разница — в интенсивности и в том, насколько это мешает жить.',
+    preface2: 'Когнитивные ловушки — отдельная история. Катастрофизация, чтение мыслей, чёрно-белое мышление — это не ADHD и не диагноз. Это стандартное оборудование человеческого мозга, одинаковое для всех. Навыки и инструменты на этом сайте работают вне зависимости от диагноза. Бери то, что подходит.',
     tabNavigator: '🧭 Навигатор', tabEmotions: '🎭 Эмоции', tabTraps: '🕳️ Ловушки',
     zonesH2: 'Что сейчас не так?', emotionsH2: 'Таблица эмоций', trapsH2: 'Когнитивные ловушки',
     backZones: '← К зонам', backCats: '← К проблемам',
@@ -251,6 +267,8 @@ const UI = {
     title: 'ADHD Toolkit — Skills Navigator',
     metaDesc: 'An interactive ADHD skills navigator: pick a problem, get a concrete skill with a "What to do" guide and a "Why it works" explanation. Emotion table and cognitive traps.',
     subtitle: 'Skills Navigator · Emotion Table · Cognitive Traps',
+    preface1: "ADHD is a spectrum, not a switch. Everyone sits somewhere on it. Maybe you lose track of time. Maybe you can't start the boring thing. Maybe criticism hits you like a truck. For some people it's a couple of familiar quirks. For others it's the full package turned up to eleven. The difference is how loud it gets and how much it gets in the way.",
+    preface2: "Cognitive traps are a separate thing entirely. Catastrophizing, mind reading, black-and-white thinking — that's not ADHD. That's standard-issue human brain. We all have the same bugs in our operating system. The tools on this site work whether you have a diagnosis or not. Take what fits. Leave what doesn't.",
     tabNavigator: '🧭 Navigator', tabEmotions: '🎭 Emotions', tabTraps: '🕳️ Traps',
     zonesH2: "What's wrong right now?", emotionsH2: 'Emotion Table', trapsH2: 'Cognitive Traps',
     backZones: '← To zones', backCats: '← To problems',
@@ -297,6 +315,8 @@ function applyStaticTexts() {
   document.title = T.title;
   $('meta[name="description"]').setAttribute('content', T.metaDesc);
   $('header p').textContent = T.subtitle;
+  $('#preface-1').textContent = T.preface1;
+  $('#preface-2').textContent = T.preface2;
   $('#tabbtn-navigator').textContent = T.tabNavigator;
   $('#tabbtn-emotions').textContent = T.tabEmotions;
   $('#tabbtn-traps').textContent = T.tabTraps;
@@ -530,6 +550,7 @@ $('#lang-toggle').addEventListener('click', () => {
 });
 
 renderAll();
+
 </script>
 </body>
 </html>
