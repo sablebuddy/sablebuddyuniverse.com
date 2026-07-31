@@ -108,6 +108,11 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
 .panel-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .selftalk-box{margin-bottom:18px}
 .selftalk-box .st-list{color:var(--tag-red-text);font-style:italic;font-size:0.92rem}
+.intro-box{margin-bottom:18px}
+.intro-box .i-quote{
+  font-size:1.15rem;font-weight:700;color:var(--h);line-height:1.4;margin-bottom:10px;
+}
+.intro-box .i-text{font-size:0.92rem;color:var(--text);line-height:1.65}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .chip{
   border:none; background:var(--blue); color:#fff; font:inherit;
@@ -250,6 +255,18 @@ const sobolImg = (src, alt) => {
   return img;
 };
 
+/* Развёрнутые описания для отдельных категорий */
+const CAT_INTRO = {
+  '"Надо" блокирует': {
+    quote: '«Я саботирую себя, я инфантильная»',
+    text: 'Знакомо? Ты хочешь сделать задачу. Реально хочешь. Но стоит кому-то сказать "надо" или "ты должна", или даже самой себе это подумать - и внутри что-то схлопывается. Тело каменеет, мозг отказывается, появляется тошнотворное сопротивление. Ты можешь просидеть час, два, три - и не сдвинуться. Это demand avoidance. Автономная нервная система воспринимает "надо" как угрозу и включает реакцию "замри". Это не лень, не саботаж, не инфантильность. Это нейрология. И есть способы обойти.'
+  },
+  'Залипаю и не могу остановиться': {
+    quote: '«Еще 5 минут... ладно, еще 5...»',
+    text: 'Гиперфокус - это твоя суперсила. В этом состоянии ты можешь за три часа сделать то, на что у других уходит неделя. Проблема в том, что у суперсилы нет кнопки "выкл". Ты проваливаешься на часы, не замечаешь времени, забываешь поесть, не слышишь людей, пропускаешь встречи. Навыки здесь не про то, чтобы убрать гиперфокус, а про то, чтобы научиться из него выходить.'
+  }
+};
+
 /* ================= Табы ================= */
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -309,12 +326,20 @@ function openCategory(zone, cat) {
 
   const box = el('div', 'panel');
 
-  // Блок «Что ты себе говоришь»
-  const stBox = el('div', 'selftalk-box');
-  stBox.appendChild(el('span', 'tag tag-red', 'Что ты себе говоришь'));
-  const selftalkAll = [...new Set(cat.problems.flatMap(p => p.selftalk))];
-  stBox.appendChild(el('div', 'st-list', selftalkAll.join(' · ')));
-  box.appendChild(stBox);
+  // Блок «Что ты себе говоришь» (+ развёрнутое описание, если есть)
+  const intro = CAT_INTRO[cat.name];
+  if (intro) {
+    const ib = el('div', 'intro-box');
+    ib.appendChild(el('div', 'i-quote', intro.quote));
+    ib.appendChild(el('div', 'i-text', intro.text));
+    box.appendChild(ib);
+  } else {
+    const stBox = el('div', 'selftalk-box');
+    stBox.appendChild(el('span', 'tag tag-red', 'Что ты себе говоришь'));
+    const selftalkAll = [...new Set(cat.problems.flatMap(p => p.selftalk))];
+    stBox.appendChild(el('div', 'st-list', selftalkAll.join(' · ')));
+    box.appendChild(stBox);
+  }
 
   // Блок «Навыки» — чипсы
   box.appendChild(el('span', 'tag tag-purple', 'Навыки'));
