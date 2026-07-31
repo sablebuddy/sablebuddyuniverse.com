@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADHD Toolkit — навигатор навыков</title>
+<meta name="description" content="Интерактивный навигатор навыков при СДВГ: выбери проблему, получи конкретный навык с инструкцией «Что делать» и объяснением «Почему работает». Таблица эмоций и когнитивные ловушки.">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+:root{
+  --bg:#f8f9fa; --card:#ffffff; --border:#e0e0e0;
+  --blue:#0f3460; --red:#e94560;
+  --h:#1a1a2e; --text:#333; --hint:#4a4a6a;
+  --active-bg:#fff5f7;
+  --tag-red-bg:#ffe0e0; --tag-red-text:#c0392b;
+  --tag-blue-bg:#cce5ff; --tag-purple-bg:#e0e0ff;
+  --tag-green-bg:#d4edda; --tag-yellow-bg:#fff3cd;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:0.95rem; line-height:1.6;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 64px}
+
+/* ===== Header ===== */
+header{padding:16px 0 6px;position:relative}
+header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
+#subtitle{color:var(--hint);font-size:0.95rem;line-height:1.5;margin:6px 0 0}
+
+@media(max-width:520px){}
+.title-row{display:flex;align-items:center;gap:12px}
+.title-row h1{margin:0}
+@media(max-width:520px){
+  .hero{flex-direction:column;align-items:center;gap:8px;text-align:center}
+  .hero-text h1{font-size:1.4rem}
+  .title-row{justify-content:center}
+  #subtitle{margin:6px auto 0;max-width:520px}
+  .buddy-img{height:125px}
+}
+.card .c-img{
+  display:block; height:110px; width:auto; max-width:100%;
+  object-fit:contain; margin:0 auto 10px;
+  transition:transform 0.2s ease;
+}
+.card:hover .c-img{transform:scale(1.06)}
+@media(max-width:520px){.card .c-img{height:96px}}
+
+
+/* ===== Buddy + collapsible intro ===== */
+.hero{display:flex;align-items:center;gap:20px;text-align:left}
+.buddy-col{display:flex;flex-direction:column;align-items:center;flex:0 0 auto}
+.hero-text{min-width:0}
+.hero-text h1{font-size:1.9rem}
+.lang-btn{position:absolute;top:16px;right:0}
+
+/* thought bubble */
+.buddy-bubble{
+  position:relative; display:block; text-align:center;
+  background:var(--card);
+  border-radius:46% 54% 52% 48% / 58% 50% 50% 42%;
+  padding:14px 20px; font-size:0.82rem; font-weight:700; line-height:1.25;
+  color:var(--blue); cursor:pointer; user-select:none;
+  box-shadow:0 3px 10px rgba(15,52,96,.14);
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
+}
+.buddy-bubble::before, .buddy-bubble::after{
+  content:''; position:absolute; background:var(--card); border-radius:50%;
+}
+.buddy-bubble::before{width:26px;height:22px;top:-8px;left:18%}
+.buddy-bubble::after{width:20px;height:17px;bottom:-6px;right:22%}
+.buddy-bubble:hover{
+  transform:scale(1.03) rotate(-1.5deg);
+  box-shadow:0 7px 18px rgba(15,52,96,.2);
+  animation:sway 0.6s ease;
+}
+@keyframes sway{
+  0%{transform:scale(1.03) rotate(-1.5deg)}
+  50%{transform:scale(1.03) rotate(1.5deg)}
+  100%{transform:scale(1.03) rotate(-1.5deg)}
+}
+.bubble-text{position:relative;z-index:1;display:block;white-space:pre-line}
+.bubble-dots{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin-top:2px;margin-left:14px}
+.bubble-dots i{display:block;background:var(--card);border-radius:50%;box-shadow:0 1px 4px rgba(15,52,96,.12)}
+.bubble-dots i:nth-child(1){width:9px;height:9px}
+.bubble-dots i:nth-child(2){width:6px;height:6px;margin-left:5px}
+.bubble-dots i:nth-child(3){width:4px;height:4px;margin-left:9px}
+
+.buddy-img{
+  display:block; height:150px; width:auto; margin-top:2px;
+  cursor:pointer; transition:transform 0.2s ease;
+}
+.buddy-img:hover{transform:scale(1.05)}
+
+/* collapsible intro */
+.preface-panel{
+  display:grid; grid-template-rows:0fr;
+  transition:grid-template-rows 0.35s ease;
+  margin:0 auto; text-align:left;
+}
+.preface-panel.open{grid-template-rows:1fr}
+.preface-inner{overflow:hidden; min-height:0; height:100%}
+.preface-inner > p{
+  background:var(--card); border:1px solid var(--border);
+  font-size:0.9rem; line-height:1.65; color:var(--text); margin:0;
+}
+.preface-inner p:first-child{border-radius:14px 14px 0 0;border-bottom:none;padding:16px 18px 0;margin-top:10px}
+.preface-inner p:last-child{border-radius:0 0 14px 14px;padding:10px 18px 16px}
+
+/* ===== Tabs ===== */
+.tabbar{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  position:sticky;top:0;z-index:50;
+  background:var(--bg);padding:6px 0;margin:0 0 12px;
+  box-shadow:0 1px 0 var(--border);
+}
+.tab-btn{
+  border:2px solid var(--border); background:var(--card); color:var(--hint);
+  font:inherit; font-weight:700; font-size:0.9rem;
+  padding:10px 18px; border-radius:12px; cursor:pointer;
+  transition:all 0.2s ease;
+}
+.tab-btn:hover{border-color:var(--blue);color:var(--blue)}
+.tab-btn.active{border-color:var(--red);background:var(--active-bg);color:var(--red)}
+.tab-pane{display:none}
+.tab-pane.active{display:block;animation:fadeIn 0.3s ease}
+.lang-btn{
+  border:2px solid var(--blue); background:var(--card); color:var(--blue);
+  font:inherit; font-weight:700; font-size:0.85rem; letter-spacing:.05em;
+  padding:6px 14px; border-radius:12px; cursor:pointer;
+  transition:all 0.2s ease;
+}
+.lang-btn:hover{background:var(--blue);color:#fff}
+
+/* ===== Grids & cards ===== */
+.grid{display:grid;gap:14px}
+.grid-zones{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.grid-cats{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.card{
+  background:var(--card); border:2px solid var(--border); border-radius:14px;
+  padding:18px 16px; cursor:pointer; transition:all 0.2s ease;
+}
+.card:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 6px 18px rgba(15,52,96,.10)}
+.card.selected{border-color:var(--red);background:var(--active-bg)}
+.card .c-emoji{font-size:1.5rem;line-height:1;display:block;margin-bottom:8px}
+.card .c-title{font-size:1.1rem;font-weight:700;color:var(--h)}
+.card .c-sub{font-size:0.82rem;color:var(--hint);margin-top:6px;line-height:1.45}
+.card .c-selftalk{
+  font-size:0.8rem;color:var(--hint);margin-top:8px;font-style:italic;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* ===== Section titles & back buttons ===== */
+.crumb-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.back-btn{
+  border:2px solid var(--border); background:var(--card); color:var(--blue);
+  font:inherit; font-weight:700; font-size:0.85rem;
+  padding:8px 14px; border-radius:12px; cursor:pointer; transition:all 0.2s ease;
+}
+.back-btn:hover{border-color:var(--blue);transform:translateY(-2px)}
+h2{font-size:1.5rem;font-weight:700;color:var(--h);margin-bottom:16px}
+h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
+
+/* ===== Tags ===== */
+.tag{
+  display:inline-block; font-size:0.7rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.04em; padding:4px 12px; border-radius:12px; margin-bottom:8px;
+}
+.tag-red{background:var(--tag-red-bg);color:var(--tag-red-text)}
+.tag-blue{background:var(--tag-blue-bg);color:var(--blue)}
+.tag-purple{background:var(--tag-purple-bg);color:var(--h)}
+.tag-green{background:var(--tag-green-bg);color:#1e6b3a}
+.tag-yellow{background:var(--tag-yellow-bg);color:#8a6d1a}
+
+/* ===== Level 3 panel ===== */
+.panel{
+  background:var(--card); border:2px solid var(--border); border-radius:14px;
+  padding:22px 20px; margin-top:18px; animation:fadeIn 0.3s ease;
+}
+.panel-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.selftalk-box{margin-bottom:18px}
+.selftalk-box .st-list{color:var(--tag-red-text);font-style:italic;font-size:0.92rem}
+.intro-box{margin-bottom:18px}
+.intro-box .i-quote{
+  font-size:1.15rem;font-weight:700;color:var(--h);line-height:1.4;margin-bottom:10px;
+}
+.intro-box .i-text{font-size:0.92rem;color:var(--text);line-height:1.65}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{
+  border:none; background:var(--blue); color:#fff; font:inherit;
+  font-size:0.85rem; font-weight:700; padding:8px 16px; border-radius:999px;
+  cursor:pointer; transition:all 0.2s ease;
+}
+.chip:hover{background:var(--red);transform:translateY(-2px)}
+.chip.active{background:var(--red)}
+.detail-box{
+  margin-top:16px; border-top:2px dashed var(--border); padding-top:16px;
+  animation:fadeIn 0.3s ease;
+}
+.detail-box .d-problem{font-weight:700;color:var(--h);margin-bottom:12px;font-size:1rem}
+.detail-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.detail-col p{font-size:0.92rem}
+@media(max-width:640px){.detail-cols{grid-template-columns:1fr}}
+
+/* ===== Accordion (Эмоции / Ловушки) ===== */
+.acc{display:flex;flex-direction:column;gap:10px}
+.acc-item{background:var(--card);border:2px solid var(--border);border-radius:14px;overflow:hidden;transition:all 0.2s ease}
+.acc-item:hover{border-color:var(--blue)}
+.acc-item.open{border-color:var(--red);background:var(--active-bg)}
+.acc-head img{height:44px;width:auto;flex:0 0 auto;margin-right:10px}
+.acc-head{
+  width:100%; background:none; border:none; font:inherit; cursor:pointer;
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:16px 18px; text-align:left;
+}
+.acc-head .a-title{font-size:1.1rem;font-weight:700;color:var(--h)}
+.acc-head .a-arrow{color:var(--hint);font-size:1rem;transition:transform 0.2s ease;flex-shrink:0}
+.acc-item.open .a-arrow{transform:rotate(180deg);color:var(--red)}
+.acc-body{display:none;padding:0 18px 18px;animation:fadeIn 0.3s ease}
+.acc-body{position:relative}
+.acc-body .acc-mascot{
+  float:right; height:110px; width:auto; margin:2px 0 8px 14px;
+}
+
+.acc-item.open .acc-body{display:block}
+.acc-sec{margin-top:14px}
+.acc-sec p{font-size:0.92rem}
+
+
+/* ===== Lightbox ===== */
+.lightbox{
+  position:fixed; inset:0; z-index:100; display:none;
+  align-items:center; justify-content:center;
+  background:rgba(10,15,30,.72); padding:24px;
+  opacity:0; transition:opacity 0.22s ease;
+}
+.lightbox.open{display:flex}
+.lightbox.visible{opacity:1}
+.lightbox img{
+  max-height:78vh; max-width:min(92vw, 720px); width:auto; height:auto;
+  border-radius:16px; background:var(--card);
+  transform:scale(0.85); opacity:0;
+  transition:transform 0.22s ease, opacity 0.22s ease;
+  box-shadow:0 12px 40px rgba(0,0,0,.35);
+}
+.lightbox.visible img{transform:scale(1); opacity:1}
+.lightbox-close{
+  position:absolute; top:16px; right:16px;
+  width:44px; height:44px; border-radius:50%;
+  border:none; background:var(--card); color:var(--h);
+  font-size:1.1rem; font-weight:700; cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+  transition:transform 0.15s ease;
+}
+.lightbox-close:hover{transform:scale(1.1)}
+
+/* clickable mascot cues */
+.card .c-img, .acc-mascot{cursor:zoom-in}
+.card .c-img{position:relative}
+
+/* ===== Animations ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:520px){
+  header h1{font-size:1.4rem}
+  .tab-btn{flex:1 1 auto;padding:10px 10px;font-size:0.82rem}
+  .card .c-title{font-size:1rem}
+  #lang-toggle{flex:0 0 auto;padding:6px 12px}
+  .acc-body .acc-mascot{height:96px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <button class="lang-btn" id="lang-toggle" title="Switch language">EN</button>
+    <div class="hero">
+      <div class="buddy-col">
+        <img src="buddy.png" id="buddy" class="buddy-img" alt="">
+      </div>
+      <div class="hero-text">
+        <div class="title-row">
+          <h1>ADHD Toolkit</h1>
+        </div>
+        <p id="subtitle"></p>
+      </div>
+    </div>
+    <div class="preface-panel" id="preface-panel">
+      <div class="preface-inner">
+        <p id="preface-1"></p>
+        <p id="preface-2"></p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar" role="tablist">
+    <button class="tab-btn active" data-tab="navigator" role="tab" id="tabbtn-navigator">🧭 Навигатор</button>
+    <button class="tab-btn" data-tab="emotions" role="tab" id="tabbtn-emotions">🎭 Эмоции</button>
+    <button class="tab-btn" data-tab="traps" role="tab" id="tabbtn-traps">🕳️ Ловушки</button>
+  </nav>
+
+  <!-- ============ TAB 1: Навигатор ============ -->
+  <section id="tab-navigator" class="tab-pane active">
+    <div id="nav-zones">
+      <h2>Что сейчас не так?</h2>
+      <div class="grid grid-zones" id="zones-grid"></div>
+    </div>
+    <div id="nav-categories" style="display:none">
+      <div class="crumb-row">
+        <button class="back-btn" id="back-to-zones">← К зонам</button>
+        <h3 class="zone-title" id="zone-title"></h3>
+      </div>
+      <div class="grid grid-cats" id="cats-grid"></div>
+      <div id="skill-panel"></div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 2: Эмоции ============ -->
+  <section id="tab-emotions" class="tab-pane">
+    <h2>Таблица эмоций</h2>
+    <div class="acc" id="emotions-acc"></div>
+  </section>
+
+  <!-- ============ TAB 3: Ловушки ============ -->
+  <section id="tab-traps" class="tab-pane">
+    <h2>Когнитивные ловушки</h2>
+    <div class="acc" id="traps-acc"></div>
+  </section>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть">✕</button>
+  <img id="lightbox-img" alt="">
+</div>
+
+<script>
+const I18N_DATA = {"ru": {"zones": [{"name": "Запуск и торможение", "emoji": "⚡", "categories": [{"name": "Не могу начать", "problems": [{"name": "Не могу начать, хотя понимаю что надо", "selftalk": ["\"Я ленивая\""], "skills": [{"skill": "Правило 2 минут", "todo": "Скажи вслух: \"только 2 минуты\". Поставь таймер. Начни самую тупую часть.", "why": "Мозг не сопротивляется короткому отрезку. Инерция и дофамин тянут дальше."}]}, {"name": "Знаю что делать, но не делаю", "selftalk": ["\"Нет мотивации\""], "skills": [{"skill": "Якорная привычка", "todo": "Выбери привычку которая есть (кофе). Сразу после нее - новое действие.", "why": "Готовый нейронный путь. Мотивация не нужна."}]}, {"name": "Откладываю, хочу идеально", "selftalk": ["\"Я прокрастинатор\""], "skills": [{"skill": "Ugly first draft", "todo": "Напиши первое предложение максимально плохо. Буквально.", "why": "Перфекционизм блокирует старт. Разрешение на \"уродливо\" снимает блок."}]}, {"name": "Сижу и не могу двинуться", "selftalk": ["\"Что-то со мной не так\""], "skills": [{"skill": "Обратный отсчет", "todo": "5, 4, 3, 2, 1 - на \"1\" встань или открой файл.", "why": "Счет активирует моторную кору и прерывает петлю."}]}, {"name": "Задача огромная", "selftalk": ["\"Не справлюсь\""], "skills": [{"skill": "Микродекомпозиция", "todo": "Разбей на шаги по 5-10 минут. Сделай только первый.", "why": "Каждый кусок дает микродозу дофамина."}]}, {"name": "Мозг хочет, тело нет", "selftalk": ["\"Я сломана\""], "skills": [{"skill": "Вход через тело", "todo": "Встань. Пройдись. Налей воды. Потом задача.", "why": "Движение активирует дофамин до когнитивной работы."}]}], "id": "nemogu"}, {"name": "Залипаю и не могу остановиться", "problems": [{"name": "Залипаю часами", "selftalk": ["\"Моя суперсила\""], "skills": [{"skill": "Мягкие таймеры", "todo": "Time Timer или вибрация каждые 45-60 минут.", "why": "Плавный сигнал не вызывает стресс."}]}, {"name": "Не могу остановиться", "selftalk": ["\"Еще 5 минут...\""], "skills": [{"skill": "Следующий шаг", "todo": "Перед фокусом запиши: \"после этого я делаю X\".", "why": "Переход проще когда решение принято заранее."}]}, {"name": "Дезориентация после выхода", "selftalk": ["\"Где я, что случилось\""], "skills": [{"skill": "Смена контекста", "todo": "Встань. Выйди. Включи/выключи свет.", "why": "Смена среды \"закрывает вкладку\"."}]}, {"name": "Не слышу, когда обращаются", "selftalk": ["\"Плевать на людей\""], "skills": [{"skill": "Партнер-прерыватель", "todo": "Рука на плечо или кодовое слово. Не голос издалека.", "why": "Физический сигнал пробивается в гиперфокус."}]}], "id": "zalipaju"}, {"name": "\"Надо\" блокирует", "problems": [{"name": "Хочу, но \"надо\" блокирует", "selftalk": ["\"Саботирую себя\""], "skills": [{"skill": "\"Я выбираю\"", "todo": "Замени \"надо\" на \"я 20 минут поработаю с данными\". Или \"я выбираю сделать щас, чтоб вечером в кафе\".", "why": "Дорсолатеральная ПФК + стресс-ответ при \"надо\". Вентромедиальная ПФК (автономия) при \"выбираю\". Другой маршрут."}]}, {"name": "Простая задача, тело нет", "selftalk": ["\"Ленивая\""], "skills": [{"skill": "Элемент выбора", "todo": "\"Какую часть первой?\" Дай себе выбор.", "why": "Приказ = \"замри\". Выбор переключает из угрозы в агентность."}]}, {"name": "\"Должна\" = отвращение", "selftalk": ["\"Инфантильная\""], "skills": [{"skill": "Замена слова", "todo": "Вычеркни \"должна\". Замени на \"решила\", \"выбираю\".", "why": "Другие области мозга, минуя сопротивление."}]}, {"name": "Ступор перед скучным", "selftalk": ["\"Нормальные просто делают\""], "skills": [{"skill": "Дофаминовая загрузка", "todo": "5 минут приятного ДО скучного.", "why": "Мозг с дофамином запускает скучное легче."}]}], "id": "nado"}], "id": "zapusk"}, {"name": "Фокус и хаос", "emoji": "🎯", "categories": [{"name": "Отвлекаюсь", "problems": [{"name": "Постоянно отвлекаюсь", "selftalk": ["\"Дефицит внимания\""], "skills": [{"skill": "Многопоток", "todo": "Фоновая музыка + главная задача. Разреши параллельный поток.", "why": "Фоновая стимуляция поддерживает дофамин. Твоя архитектура."}]}, {"name": "Не могу сосредоточиться в одиночку", "selftalk": ["\"Зависимая от людей\""], "skills": [{"skill": "Body doubling", "todo": "Focusmate, стрим, или звонок другу - работайте молча.", "why": "Иллюзия внешнего контроля. Даже если другу фиолетово. Работает."}]}, {"name": "Забываю о задачах", "selftalk": ["\"Безответственная\""], "skills": [{"skill": "Визуальные триггеры", "todo": "Стикеры, таблетки на виду. Не прячь важное.", "why": "Убрано = в параллельной вселенной. Видимость = напоминание."}]}, {"name": "Через 5 минут в телефоне", "selftalk": ["\"Нет силы воли\""], "skills": [{"skill": "Один вход, один выход", "todo": "Телефон в другую комнату. 25 минут.", "why": "Убирание соблазнов лучше сопротивления."}]}, {"name": "Не могу войти в поток", "selftalk": ["\"Все легко начинают\""], "skills": [{"skill": "Ритуал входа", "todo": "Наушники + плейлист + место. Одинаково каждый раз.", "why": "Через 2-3 недели мозг входит в фокус автоматически."}]}], "id": "otvlek"}, {"name": "Все забываю", "problems": [{"name": "Забываю мысли через секунды", "selftalk": ["\"Проблемы с памятью\""], "skills": [{"skill": "Brain dump", "todo": "Надиктуй все из головы. Прямо сейчас.", "why": "Выгрузка освобождает память и снимает тревогу \"не забыть бы\"."}]}, {"name": "Записываю в 5 мест", "selftalk": ["\"Неорганизованная\""], "skills": [{"skill": "Одна система", "todo": "ОДНО место для записей. Удали все остальные.", "why": "Мозг сдается после первого неудачного поиска."}]}, {"name": "Киваю и забываю", "selftalk": ["\"Мне все равно\""], "skills": [{"skill": "Проговаривание", "todo": "\"То есть ты хочешь, чтобы я...\" Повтори вслух.", "why": "Из пассивной памяти в активную."}]}, {"name": "Записала, не помню зачем", "selftalk": ["\"Идиотка\""], "skills": [{"skill": "Контекстные заметки", "todo": "Не \"Маша\", а \"Маша - отчет, до пятницы\".", "why": "Заметка без контекста бесполезна."}]}, {"name": "Забываю взять вещи", "selftalk": ["\"Рассеянная\""], "skills": [{"skill": "Визуализация", "todo": "Представь себя берущей вещь. 5 секунд.", "why": "Визуальные сцены в устойчивом типе памяти."}]}], "id": "zabivaju"}, {"name": "Все сразу", "problems": [{"name": "Все одинаково важное", "selftalk": ["\"Не умею приоритизировать\""], "skills": [{"skill": "Что сгорит первым?", "todo": "Что развалится если не сделать сегодня? Это первое.", "why": "Угроза потери запускает дофамин."}]}, {"name": "Список на 15 пунктов", "selftalk": ["\"Должна все успеть\""], "skills": [{"skill": "Три задачи", "todo": "Вычеркни все кроме трех.", "why": "Короткий список не перегружает."}]}, {"name": "Не знаю за что взяться", "selftalk": ["\"Плохо планирую\""], "skills": [{"skill": "Must / Should / Could", "todo": "Must - катастрофа щас! Should - проблемка через неделю. Could - ой да ну.", "why": "Три корзины проще иерархии."}]}, {"name": "Час планирую вместо работы", "selftalk": ["\"Нужен план\""], "skills": [{"skill": "Чекин 5 минут", "todo": "Открой. Выбери три. Закрой. Начни.", "why": "Планирование легко становится прокрастинацией."}]}], "id": "vsesrazu"}, {"name": "Не чувствую время", "problems": [{"name": "Не чувствую сколько прошло", "selftalk": ["\"Безответственная\""], "skills": [{"skill": "Визуальный таймер", "todo": "Time Timer на стол.", "why": "Мозг видит убывание визуально. Замена сломанного метронома."}]}, {"name": "Всегда опаздываю", "selftalk": ["\"Плевать на людей\""], "skills": [{"skill": "Обратное планирование", "todo": "\"Быть в 14:00\". Вычти дорогу, сборы, буфер 15 мин.", "why": "ADHD недооценивает время. Обратный отсчет + буфер."}]}, {"name": "\"5 минут\" = час", "selftalk": ["\"Вру себе\""], "skills": [{"skill": "Замеры на неделю", "todo": "Засекай реальное время на рутину. Записывай.", "why": "Данные калибруют внутренние оценки."}]}, {"name": "Не оцениваю длительность", "selftalk": ["\"Плохо планирую\""], "skills": [{"skill": "Правило x2", "todo": "Умножь оценку на два. Всегда.", "why": "Компенсация стабильной недооценки."}]}, {"name": "Далекий дедлайн не существует", "selftalk": ["\"Сделаю потом\""], "skills": [{"skill": "Мини-дедлайны", "todo": "Разбей на части с дедлайнами через 1-2 дня.", "why": "Близкий дедлайн = дофамин. Далекий = параллельная вселенная."}]}], "id": "vremja"}, {"name": "Бардак вокруг", "problems": [{"name": "Ищу ключи и телефон", "selftalk": ["\"Разгильдяйка\""], "skills": [{"skill": "Место обитания", "todo": "Одно место для ключей. ТОЛЬКО туда. Каждый раз.", "why": "Мозг вспоминает маршрут руки."}]}, {"name": "Стол завален", "selftalk": ["\"Неряха\""], "skills": [{"skill": "Одна функция", "todo": "Стол = работа. Убери все остальное.", "why": "Смешение убивает ассоциацию."}]}, {"name": "Убрала и забыла", "selftalk": ["\"Ну и ладно\""], "skills": [{"skill": "Без крышек", "todo": "Открытые корзины, прозрачные контейнеры.", "why": "\"Невидимое\" = \"несуществующее\"."}]}, {"name": "Копится хлам", "selftalk": ["\"Когда-нибудь разберу\""], "skills": [{"skill": "30 секунд", "todo": "Меньше 30 секунд? Делай сейчас.", "why": "\"Потом\" при ADHD не наступает."}]}], "id": "bardak"}], "id": "fokus"}, {"name": "Эмоции и энергия", "emoji": "🎢", "categories": [{"name": "Эмоции скачут", "problems": [{"name": "Взрываюсь, потом жалею", "selftalk": ["\"Неуравновешенная\""], "skills": [{"skill": "90 секунд", "todo": "Выйди. Не пиши. 90 секунд.", "why": "Волна эмоции ~90 сек. Потом падает."}]}, {"name": "Эмоция захлестывает", "selftalk": ["\"Слишком эмоциональная\""], "skills": [{"skill": "Naming", "todo": "Скажи: \"я чувствую ярость\". Точно. Карточки эмоций в разделе ловушек.", "why": "Называние активирует ПФК, тормозит амигдалу."}]}, {"name": "Не ответили = не нужна", "selftalk": ["\"Слишком чувствительная\""], "skills": [{"skill": "Факт или интерпретация?", "todo": "Факт: \"не ответила 3 часа\". Интерпретация: \"считает некомпетентной\". Сравни.", "why": "Разделение дает мозгу время до реакции."}]}, {"name": "Критика = катастрофа", "selftalk": ["\"Не выношу правду\""], "skills": [{"skill": "Файл побед", "todo": "Записывай успехи. Читай при RSD. Ты сделала больше многих.", "why": "Контраргументы для ПФК. Амигдала прячет позитив."}]}, {"name": "Реагирую до мысли", "selftalk": ["\"Агрессивная\""], "skills": [{"skill": "Физическая пауза", "todo": "Встань. Выйди. Телефон в карман.", "why": "Прерывает каскад на уровне тела."}]}, {"name": "На взводе без причины", "selftalk": ["\"Нестабильная\""], "skills": [{"skill": "Чеклист базы", "todo": "Когда ел/а? Пил/а воду? Сколько спал/а?", "why": "Дисрегуляция усиливается при голоде."}]}, {"name": "Переживаю днями", "selftalk": ["\"Зацикленная\""], "skills": [{"skill": "Шкала времени", "todo": "Важно через неделю? Месяц? Год? Нет - отпусти.", "why": "Масштабирование снимает критичность."}]}, {"name": "Боюсь, что видят недостатки", "selftalk": ["\"Ненормальная\""], "skills": [{"skill": "Кодовое слово", "todo": "Близкий говорит слово при RSD. Без осуждения.", "why": "Изнутри RSD не видно. Внешний якорь."}]}], "id": "emoskach"}, {"name": "Боюсь отказа и критики (RSD)", "problems": [{"name": "Непропорциональная реакция на отвержение", "selftalk": ["\"Слишком чувствительная\""], "skills": [{"skill": "Файл побед", "todo": "Заметка с фактами успехов. Читай при атаке.", "why": "Контрданные для ПФК."}]}, {"name": "Додумываю отвержение", "selftalk": ["\"Что-то со мной не так\""], "skills": [{"skill": "Факт vs интерпретация", "todo": "\"Не ответил\" - факт. \"Плевать\" - додумка. Запиши.", "why": "RSD выдает интерпретацию как факт."}]}, {"name": "RSD-атака", "selftalk": ["\"Не могу это контролировать\""], "skills": [{"skill": "Кодовое слово", "todo": "Договорись: слово при RSD-атаке.", "why": "Изнутри не видно. Внешний якорь."}]}, {"name": "Импульсивная реакция на критику", "selftalk": ["\"Я неадекватная\""], "skills": [{"skill": "90 секунд", "todo": "Не отвечай. Не пиши. 90 секунд.", "why": "Волна спадает. Потом думать проще."}]}], "id": "rsd"}, {"name": "Стыжусь себя", "problems": [{"name": "Откладываю жизнь", "selftalk": ["\"Еще не готова\""], "skills": [{"skill": "Делать грязно", "todo": "Начни. Отправь. Как есть. Сейчас.", "why": "Перфекционизм = RSD в маске."}]}, {"name": "Забыла = плохой человек", "selftalk": ["\"Безответственная\""], "skills": [{"skill": "Факт, не приговор", "todo": "\"Забыла\" - факт. \"Безответственная\" - приговор.", "why": "Мозг путает поведение и идентичность."}]}, {"name": "Сравниваю с коллегами", "selftalk": ["\"Все могут, я нет\""], "skills": [{"skill": "Другой движок", "todo": "Другая архитектура. Сравнение некорректно.", "why": "Рыба не лазает по деревьям."}]}, {"name": "Вижу только несделанное", "selftalk": ["\"Ничего не достигаю\""], "skills": [{"skill": "Список сделанного", "todo": "Вечером три сделанных вещи. Каждый день.", "why": "Фиксация перекалибровывает критика."}]}], "id": "styd"}, {"name": "Нет сил", "problems": [{"name": "Утром ок, после обеда труп", "selftalk": ["\"Должна ровно весь день\""], "skills": [{"skill": "Окна продуктивности", "todo": "Неделю записывай потоки и зоны. Сложное в окна.", "why": "Против волны = тройной расход."}]}, {"name": "Перед месячными развал", "selftalk": ["\"Слабая\""], "skills": [{"skill": "Цикл как фактор", "todo": "Отмечай фазы. Лютеиновая = не амбициозное.", "why": "Фолликулярная: дофамин+. Лютеиновая: ADHD+."}]}, {"name": "Выгораю после интенсива", "selftalk": ["\"Все могут\""], "skills": [{"skill": "Буферное время", "todo": "15 минут ничего между задачами.", "why": "Без буфера = переключательный долг."}]}, {"name": "Вина при отдыхе", "selftalk": ["\"Отдых = лень\""], "skills": [{"skill": "Плановый отдых", "todo": "\"Отдых\" в календарь как задачу.", "why": "Без восстановления мозг ломается."}]}], "id": "netsil"}, {"name": "Кручу мысли по кругу", "problems": [{"name": "Кручу мысль часами", "selftalk": ["\"Должна додумать\""], "skills": [{"skill": "Brain dump", "todo": "Вывали на бумагу. Не решай.", "why": "Мозг перестает бояться \"забыть подумать\"."}]}, {"name": "Не отпускаю проблему", "selftalk": ["\"Думать дольше = решу\""], "skills": [{"skill": "Тест на действие", "todo": "\"Могу что-то сделать сейчас?\" Да = действие. Нет = тревога.", "why": "Тревога маскируется под анализ."}]}, {"name": "Прокручиваю конфликт", "selftalk": ["\"Нужно понять кто прав\""], "skills": [{"skill": "Таймер", "todo": "10 минут с таймером. После - встань, попей чайку.", "why": "Разрешение + точка выхода."}]}, {"name": "Мысли не остановить", "selftalk": ["\"Схожу с ума\""], "skills": [{"skill": "Тело", "todo": "Душ. Прогулка. Смена комнаты.", "why": "Когнитивно невозможно. Тело перезагружает."}]}, {"name": "Анализирую без результата", "selftalk": ["\"Нужно больше данных\""], "skills": [{"skill": "Проговорить", "todo": "Позвони. Предупреди про мозговой поток.", "why": "Петля рвется когда становится слышимой."}]}], "id": "misli"}], "id": "emocii"}, {"name": "Общение", "emoji": "🗣️", "categories": [{"name": "Конфликты в отношениях", "problems": [{"name": "\"Ты не слушаешь!\"", "selftalk": ["\"Мне все равно\""], "skills": [{"skill": "Объяснить механизм", "todo": "\"Мозг не удерживает устное в процессе. Напиши.\"", "why": "Инструкция лучше оправдания."}]}, {"name": "Забываю сказанное", "selftalk": ["\"Не ценю людей\""], "skills": [{"skill": "Запрос на текст", "todo": "\"Можешь написать? Так не забуду.\"", "why": "Текст существует. Устное - нет."}]}, {"name": "Партнер чувствует себя забытым", "selftalk": ["\"Плохая партнерша\""], "skills": [{"skill": "Чекин", "todo": "\"Что тебе от меня нужно?\" Раз в день.", "why": "Прямой вопрос > угадывание."}]}, {"name": "Не переключаюсь на разговор", "selftalk": ["\"Мне плевать\""], "skills": [{"skill": "Честная пауза", "todo": "\"Дай 10 минут, и я вся твоя.\"", "why": "Честность > притворное слушание."}]}], "id": "konflikt"}, {"name": "Уже все понял, а он треплет", "problems": [{"name": "Мозг уже все понял, собеседник продолжает", "selftalk": ["\"Нетерпеливый, грубый\""], "skills": [{"skill": "Мысленное резюме", "todo": "Составь 3-bullet summary в голове пока собеседник говорит.", "why": "Занятый задачей мозг не бунтует."}]}, {"name": "Хочется крикнуть 'я все понял!'", "selftalk": ["\"Не умею слушать\""], "skills": [{"skill": "Физический якорь терпения", "todo": "Зажми кулак, коснись стола, вдох.", "why": "Тело \"держит\" в разговоре."}]}, {"name": "Собеседник замолчал, хочется сразу выпалить", "selftalk": ["\"Грубый\""], "skills": [{"skill": "Переведи в вопрос", "todo": "\"То есть ключевой момент в том, что...?\"", "why": "Уважение + контроль темпа."}]}, {"name": "Агония ожидания конца монолога", "selftalk": ["\"Нетерпеливый\""], "skills": [{"skill": "Правило 30 секунд", "todo": "Дослушай еще 30 сек. Микро-задача.", "why": "Инвестиция в отношения."}]}], "id": "ponjal"}, {"name": "Перебиваю и выпаливаю", "problems": [{"name": "Мысль горит, рвется наружу", "selftalk": ["\"Невоспитанный\""], "skills": [{"skill": "Правило 3 секунд", "todo": "Один, два, три - потом рот.", "why": "Микро-зазор. ПФК получает время."}]}, {"name": "Боюсь потерять мысль", "selftalk": ["\"Не могу контролировать\""], "skills": [{"skill": "Записывай мысль", "todo": "Запиши на бумажке вместо выстрела в разговор.", "why": "Запись снимает тревогу потери."}]}, {"name": "Выпаливаю не подумав", "selftalk": ["\"Агрессивный\""], "skills": [{"skill": "Перефразируй", "todo": "\"То есть ты говоришь, что...\" Потом свое.", "why": "Собеседник услышан + ты проверяешь."}]}, {"name": "Импульс перебить", "selftalk": ["\"Не контролирую себя\""], "skills": [{"skill": "Якорь \"стоп\"", "todo": "Зажми кулак при желании перебить. Каждый раз.", "why": "Кондиционирование за 2-3 недели."}]}], "id": "perebivaju"}], "id": "obschenie"}], "emotions": [{"name": "Злость", "weak": "раздражение, досада, недовольство, фрустрация", "mid": "злость, гнев, возмущение, негодование, обида", "strong": "ярость, бешенство, ненависть, презрение", "body": "сжатые кулаки, жар в груди, напряжение челюсти, учащенное дыхание", "message": "Твои границы нарушены. Что-то важное для тебя под угрозой. Или ты чувствуешь несправедливость."}, {"name": "Страх", "weak": "беспокойство, тревога, неуверенность, настороженность", "mid": "страх, паника, ужас, испуг", "strong": "парализующий ужас, фобия, дереализация", "body": "холод в животе, потные ладони, учащенный пульс, желание убежать", "message": "Мозг видит угрозу (реальную или воображаемую). При ADHD часто срабатывает на социальные ситуации (RSD)."}, {"name": "Грусть", "weak": "разочарование, уныние, тоска, меланхолия", "mid": "грусть, печаль, горе, одиночество", "strong": "отчаяние, опустошенность, безнадежность", "body": "тяжесть в груди, ком в горле, слезы, желание свернуться", "message": "Ты потеряла что-то важное (или чувствуешь, что потеряешь). Потребность в поддержке и принятии."}, {"name": "Стыд", "weak": "неловкость, смущение, застенчивость", "mid": "стыд, вина, унижение", "strong": "токсичный стыд, ощущение 'я дефектная'", "body": "жар в лице, желание провалиться, избегание взгляда, сжатие в себя", "message": "Ты чувствуешь, что не соответствуешь стандарту (часто чужому). При ADHD стыд хронически завышен из-за лет критики."}, {"name": "Радость", "weak": "удовлетворение, интерес, оживление, спокойствие", "mid": "радость, восторг, эйфория, влюбленность", "strong": "экстаз, мания, неконтролируемый подъем", "body": "легкость в теле, улыбка, энергия, желание двигаться и делиться", "message": "Потребность удовлетворена. Ты в безопасности и в контакте. При ADHD радость бывает взрывной и короткой."}, {"name": "Отвращение", "weak": "неприязнь, скука, пресыщение", "mid": "отвращение, брезгливость, омерзение", "strong": "тошнота, рвотный рефлекс, физическое отторжение", "body": "тошнота, отворачивание, морщенный нос, желание оттолкнуть", "message": "Что-то нарушает твои ценности или физические границы. Сигнал 'это не для меня'."}, {"name": "Удивление", "weak": "любопытство, интерес, недоумение", "mid": "удивление, шок, изумление", "strong": "потрясение, дезориентация, ступор", "body": "широкие глаза, открытый рот, замирание, затем всплеск энергии", "message": "Реальность не совпала с ожиданием. Мозг перестраивает картину мира. При ADHD может запустить гиперфокус на новом."}, {"name": "Зависть", "weak": "сравнение, неудовлетворенность, 'хочу тоже'", "mid": "зависть, ревность, горечь", "strong": "ненависть к чужому успеху, саморазрушение", "body": "сжатие в груди, горечь, навязчивые мысли о чужом успехе", "message": "Ты видишь у других то, чего хочешь для себя. Это компас: зависть указывает на твои реальные желания."}], "traps": [{"name": "Катастрофизация", "what": "Худший сценарий кажется единственным возможным", "example": "Не ответила на сообщение > значит она меня ненавидит > меня уволят > я останусь без денег", "todo": "Спроси: какова реальная вероятность худшего? Что произойдет скорее всего?", "adhd": "Мозг эволюционно заточен на выживание. Лучше перестраховаться и увидеть тигра там, где его нет, чем не заметить настоящего. Цена ошибки 'не заметил опасность' выше, чем 'запаниковал зря'. Поэтому мозг строит цепочку до катастрофы автоматически."}, {"name": "Чтение мыслей", "what": "Ты 'знаешь', что думают другие (и ты уверена, что это что-то плохое)", "example": "Он так посмотрел - точно думает, что я тупая", "todo": "Ты не телепат. Запиши: что он СДЕЛАЛ? Что ты ДОДУМАЛА?", "adhd": "Мозг ненавидит неопределенность. Не знать что думает другой человек - это дыра в картине мира, и мозг ее заполняет. А поскольку система угрозы приоритетнее системы вознаграждения, заполняет он ее негативом. Так безопаснее."}, {"name": "Черно-белое мышление", "what": "Только два варианта: идеально или ужасно. Середины нет", "example": "Если я не сделаю это на 100%, значит я полный ноль", "todo": "Найди третий вариант. 'Сделано на 70% - это достаточно хорошо?'", "adhd": "Мозг экономит энергию. Сортировать по оттенкам сложно, разделить на 'хорошо/плохо' - просто. Это быстрый эвристический путь, который отлично работал для выживания, но плохо работает для сложных решений."}, {"name": "Обесценивание позитива", "what": "Успехи не считаются, а провалы - реальность", "example": "Повышение? Ну это просто повезло. А вот ту задачу я провалила - это настоящая я", "todo": "Файл побед. Записывай каждый успех. Перечитывай.", "adhd": "Негативный опыт записывается в память ярче и глубже, чем позитивный. Это называется negativity bias - предвзятость к негативу. Мозг запоминает угрозы лучше, чем награды, потому что от угроз зависело выживание."}, {"name": "Эмоциональное обоснование", "what": "Чувствую = значит так и есть", "example": "Я чувствую себя никчемной - значит я никчемная", "todo": "Эмоция - не доказательство. 'Я ЧУВСТВУЮ себя никчемной' не равно 'я никчемная'.", "adhd": "Мозг не различает эмоцию и факт. Если ты чувствуешь страх, мозг решает что опасность реальна. Эмоция для мозга - это данные, такие же как зрение или слух. Он не проверяет источник."}, {"name": "Долженствование", "what": "'Должна', 'обязана', 'надо' - я должна себе и другим", "example": "Я должна была знать!", "todo": "Замени 'должна' на 'хочу' или 'было бы хорошо'. Смотри блок Demand avoidance. Все, что ты должна, указано в налоговом кодексе или банковской выписке, - остальное не факт.", "adhd": "Должествование - это усвоенные правила, которые когда-то помогали адаптироваться (в семье, школе, обществе). Мозг хранит их как абсолюты, потому что в детстве нарушение этих правил имело последствия."}, {"name": "Навешивание ярлыков", "what": "Из поступка делаешь диагноз личности", "example": "Забыла встречу = 'я безответственная'. Не 'я забыла', а 'я ТАКАЯ'", "todo": "Отдели факт от приговора. 'Я забыла' - поведение. 'Безответственная' - ярлык.", "adhd": "Мозг любит категории. 'Я забывчивая' проще обработать чем 'я забыла эту конкретную вещь в этом конкретном контексте'. Ярлык экономит когнитивные ресурсы, но ценой точности."}, {"name": "Персонализация", "what": "Все, что происходит, как-то про тебя", "example": "Коллега хмурая = я что-то не так сделала", "todo": "Не все про тебя. У людей своя жизнь. Спроси, если не уверена.", "adhd": "Мозг социального существа постоянно мониторит: 'я в безопасности в группе?' Любой сигнал, который можно интерпретировать как угрозу позиции в группе, получает приоритет. Это древний механизм: быть изгнанным из племени = смерть."}, {"name": "Сверхобобщение", "what": "Из одного случая делаешь правило", "example": "Один провал на презентации = 'я всегда проваливаюсь'", "todo": "'Всегда? Правда? Назови три раза, когда было ОК.'", "adhd": "Один яркий случай запоминается лучше, чем десять обычных. Мозг строит правила на основе того, что помнит, а помнит он самое эмоционально заряженное. Поэтому одна неудача перевешивает десять успехов."}, {"name": "Ментальный фильтр", "what": "Из 100 событий видишь только одно негативное", "example": "99 добрых комментариев и 1 критика. Помнишь только критику", "todo": "Прочитай все 100. Буквально. Посчитай соотношение.", "adhd": "Внимание - ограниченный ресурс. Мозг фильтрует входящее по значимости, а значимость определяется угрозой. Негативное проходит фильтр первым. Это не выбор, это архитектура восприятия."}, {"name": "Предсказание будущего", "what": "Ты 'знаешь', что будет (плохо)", "example": "Нет смысла пробовать - все равно не получится", "todo": "Я тебя расстрою, но... ты не пророк. Что говорят факты? Получалось ли раньше? Помни: \"нет\" уже есть в твоем кармане - попробуй, может, ты получишь \"Да!\"", "adhd": "Мозг строит прогнозы на основе прошлого опыта, но с перекосом: негативные исходы запоминаются ярче. Прогноз получается смещенным в сторону 'будет плохо', потому что база данных перекошена."}, {"name": "Преуменьшение", "what": "Свои достижения уменьшаешь, чужие увеличиваешь", "example": "У нее настоящий талант, а я просто повезло / много работала", "todo": "Представь, что подруга сказала о себе то, что ты говоришь. Ты бы согласилась?", "adhd": "Двойной стандарт - это защитный механизм. К себе строже, потому что ты контролируешь свои действия (и чувствуешь ответственность). К другим мягче, потому что ты не знаешь их внутренний контекст. Мозг не применяет это правило симметрично."}, {"name": "Туннельное зрение", "what": "Фокус на одном аспекте, остальное исчезает", "example": "Одна ошибка в проекте = весь проект провал", "todo": "Отойди назад. Посмотри на картину целиком. Что еще есть кроме ошибки?", "adhd": "Внимание захватывается тем, что вызывает эмоцию. Одна ошибка вызывает тревогу, остальной проект - нет. Мозг направляет ресурсы туда, где тревога, и остальное буквально исчезает из поля зрения."}, {"name": "Магическое мышление", "what": "'Если я буду достаточно переживать, это предотвратит плохое'", "example": "Не могу перестать тревожиться - вдруг если расслаблюсь, случится плохое", "todo": "Тревога не защищает. Она тратит энергию. Что реально можно сделать?", "adhd": "Иллюзия контроля. Мозг не выносит беспомощность. 'Я ничего не могу сделать' - непереносимо. 'Я хотя бы переживаю' - создает ощущение что ты делаешь хоть что-то. Тревога маскируется под действие."}, {"name": "Справедливый мир", "what": "'Если я буду хорошей, со мной будут хорошо обращаться'", "example": "Я столько старалась, а меня не оценили - это несправедливо!", "todo": "Мир не справедлив. Но ты можешь выбирать, где и с кем находиться.", "adhd": "Потребность в предсказуемости. Мозг ищет закономерности и причинно-следственные связи даже там, где их нет. 'Если я буду хорошей, мир будет справедлив' - это попытка сделать хаос управляемым."}, {"name": "Сравнение", "what": "Постоянное сравнение себя с 'нормальными'", "example": "Она легко организует жизнь, а я не могу даже ключи найти", "todo": "Ты видишь результат, а не процесс. Ты не знаешь, что этот человек делает каждый день. Возможно, так же, как и ты, он много ошибается, откладывает дела, сомневается и переделывает работу. Просто ты этого не видишь.", "adhd": "Социальное сравнение - базовый механизм самооценки. Мозг определяет твою позицию в группе через сравнение с другими. Проблема в том, что ты сравниваешь свой внутренний опыт (хаос, усилие) с чужим внешним результатом (витрина)."}, {"name": "Минимизация усилий", "what": "'Если мне трудно, значит я делаю неправильно'", "example": "Другие делают это легко, а мне приходится напрягаться", "todo": "Трудно != неправильно. Твой мозг тратит больше ресурса на то же самое.", "adhd": "Мозг путает 'трудно' с 'неправильно'. Эволюционно: если действие требует много энергии, возможно, ты делаешь его неэффективно и лучше сменить стратегию. Полезное правило для охоты, плохое для отчетов."}, {"name": "Телепатия наоборот", "what": "'Они должны были догадаться, что мне нужно'", "example": "Он должен был понять, что мне обидно, без слов", "todo": "Скажи прямо. Люди не телепаты. Ясная просьба - не слабость.", "adhd": "Теория психики (theory of mind): мозг моделирует внутреннее состояние других людей. Но модель строится на основе собственного состояния. Если тебе очевидно что ты чувствуешь, мозг предполагает что другим тоже очевидно."}, {"name": "Ложная дилемма", "what": "'Или я это сделаю идеально прямо сейчас, или не буду делать вообще'", "example": "Нет времени на полноценную тренировку - значит нет смысла идти", "todo": "15 минут > 0 минут. 70% > 0%. Грязно > никак.", "adhd": "Все или ничего + потребность в контроле. Если ты не можешь гарантировать идеальный результат, мозг предпочитает не начинать - так он избегает неопределенности и потенциального провала."}, {"name": "Проекция мотивов", "what": "'Он сделал это специально, чтобы мне навредить'", "example": "Она не пригласила меня - специально исключает", "todo": "Злой умысел или невнимательность? Что вероятнее? Спроси прямо.", "adhd": "Мозг интерпретирует непонятное поведение через модель угрозы: 'если я не понимаю зачем он это сделал, безопаснее предположить что это направлено против меня'. Древний механизм: лучше перебдеть."}]}, "en": {"zones": [{"name": "Launch & Braking", "categories": [{"name": "Can't Start", "problems": [{"name": "Can't start, though I know I have to", "selftalk": ["\"Я ленивая\""], "skills": [{"skill": "2-Minute Rule", "todo": "Say aloud: \"just 2 minutes\". Set a timer. Start the dumbest part.", "why": "The brain doesn't resist short intervals. Inertia and dopamine pull you forward."}]}, {"name": "I know what to do, but I don't do it", "selftalk": ["\"Нет мотивации\""], "skills": [{"skill": "Anchor Habit", "todo": "Pick an existing habit (coffee). Immediately after, do the new thing.", "why": "Uses an existing neural pathway. No motivation generation needed."}]}, {"name": "I procrastinate, I want it perfect", "selftalk": ["\"Я прокрастинатор\""], "skills": [{"skill": "Ugly First Draft", "todo": "Write the first sentence as badly as possible. Literally.", "why": "Perfectionism blocks the start. Permission to be ugly removes the block."}]}, {"name": "Sitting frozen, can't move", "selftalk": ["\"Что-то со мной не так\""], "skills": [{"skill": "Countdown 5-4-3-2-1", "todo": "Count aloud: 5, 4, 3, 2, 1. At \"1\" stand up or open the file.", "why": "Counting activates motor cortex and interrupts the procrastination loop."}]}, {"name": "The task is huge", "selftalk": ["\"Не справлюсь\""], "skills": [{"skill": "Micro-decomposition", "todo": "Break into 5-10 minute steps. Do only the first one.", "why": "Each completed chunk gives a microdose of dopamine."}]}, {"name": "Brain wants to, body won't", "selftalk": ["\"Я сломана\""], "skills": [{"skill": "Body First", "todo": "Stand up. Walk. Pour water. Then sit down to work.", "why": "Physical movement activates dopamine before cognitive work begins."}]}], "id": "nemogu"}, {"name": "Hyperfocus - Can't Stop", "problems": [{"name": "Stuck scrolling for hours", "selftalk": ["\"Моя суперсила\""], "skills": [{"skill": "Soft Timers", "todo": "Time Timer or gentle vibration every 45-60 minutes. No harsh alarms.", "why": "Gentle signal doesn't cause stress. Brain resists exit less."}]}, {"name": "Can't stop", "selftalk": ["\"Еще 5 минут...\""], "skills": [{"skill": "Next Step", "todo": "Before focusing, write: \"after this I do X\". Put the note visibly.", "why": "Transition is easier when the decision is already made."}]}, {"name": "Disoriented after snapping out", "selftalk": ["\"Где я, что случилось\""], "skills": [{"skill": "Context Switch", "todo": "Stand up. Leave the room. Change the lighting. Drink water.", "why": "The brain ties the task to its environment. Changing the environment \"closes the tab\"."}]}, {"name": "I don't hear people talking to me", "selftalk": ["\"Плевать на людей\""], "skills": [{"skill": "Interruption Partner", "todo": "Agree with someone: hand on shoulder or code word. Not shouting from across the room.", "why": "Physical signal penetrates where voice in hyperfocus doesn't."}]}], "id": "zalipaju"}, {"name": "'Must' Blocks Me", "problems": [{"name": "I want to, but \"must\" blocks me", "selftalk": ["\"Саботирую себя\""], "skills": [{"skill": "\"I Choose\"", "todo": "Replace \"I must do the report\" with \"I'll work with the data for 20 min\". Or: \"I choose to do this now so I can go to a cafe tonight\".", "why": "\"Must\" activates dorsolateral PFC in coercion mode + stress response. \"I choose\" activates ventromedial PFC - autonomy zone. Different neural route."}]}, {"name": "Simple task, body says no", "selftalk": ["\"Ленивая\""], "skills": [{"skill": "Element of Choice", "todo": "\"Which part do I do first?\" Give yourself a choice.", "why": "Command = freeze response. Choice switches brain from threat to agency."}]}, {"name": "\"Should\" = disgust", "selftalk": ["\"Инфантильная\""], "skills": [{"skill": "Word Swap", "todo": "Delete \"should\". Replace with \"decided\", \"choosing\", \"want to\".", "why": "These words activate different brain areas, bypassing resistance."}]}, {"name": "Frozen before anything boring", "selftalk": ["\"Нормальные просто делают\""], "skills": [{"skill": "Dopamine Pre-load", "todo": "5 minutes of something pleasant BEFORE the boring task.", "why": "A brain with dopamine on board starts boring tasks more easily."}]}], "id": "nado"}], "id": "zapusk"}, {"name": "Focus & Chaos", "categories": [{"name": "Getting Distracted", "problems": [{"name": "Constantly distracted", "selftalk": ["\"Дефицит внимания\""], "skills": [{"skill": "Multi-thread", "todo": "Background music + main task. Allow the parallel stream.", "why": "Background stimulation maintains dopamine. Your architecture, not a defect."}]}, {"name": "Can't focus alone", "selftalk": ["\"Зависимая от людей\""], "skills": [{"skill": "Body Doubling", "todo": "Focusmate, \"study with me\" stream, or call a friend and work silently.", "why": "Others' presence creates a sense of accountability. Even if they're not watching. It works."}]}, {"name": "I forget about tasks", "selftalk": ["\"Безответственная\""], "skills": [{"skill": "Visual Triggers", "todo": "Sticky notes, meds where you can see them. Don't hide anything important.", "why": "Out of sight = fell into a parallel universe. Visibility = reminder."}]}, {"name": "On the phone 5 minutes later", "selftalk": ["\"Нет силы воли\""], "skills": [{"skill": "One In, One Out", "todo": "Phone in another room. Close tabs. For 25 minutes.", "why": "Removing temptations beats resisting them. Willpower is limited."}]}, {"name": "Can't get into flow", "selftalk": ["\"Все легко начинают\""], "skills": [{"skill": "Entry Ritual", "todo": "Headphones + specific playlist + specific spot. Same every time.", "why": "After 2-3 weeks brain enters focus automatically. Conditioned reflex."}]}], "id": "otvlek"}, {"name": "Forgetting Everything", "problems": [{"name": "I forget thoughts within seconds", "selftalk": ["\"Проблемы с памятью\""], "skills": [{"skill": "Brain Dump", "todo": "Voice note or write everything in your head. Right now.", "why": "Unloading frees working memory and relieves \"must not forget\" anxiety."}]}, {"name": "I take notes in 5 places", "selftalk": ["\"Неорганизованная\""], "skills": [{"skill": "One System", "todo": "ONE place for notes. Any. Delete all others.", "why": "The ADHD brain gives up after the first failed search."}]}, {"name": "I nod and forget", "selftalk": ["\"Мне все равно\""], "skills": [{"skill": "Say It Back", "todo": "\"So you want me to...\" Repeat the task in your own words.", "why": "Converts from passive auditory memory to active processing."}]}, {"name": "Wrote it down, forgot why", "selftalk": ["\"Идиотка\""], "skills": [{"skill": "Context Notes", "todo": "Not \"Maria\" but \"Maria - March report, due Friday\".", "why": "A note without context is useless. Future you won't remember why."}]}, {"name": "I forget to take things", "selftalk": ["\"Рассеянная\""], "skills": [{"skill": "Visualization", "todo": "Mentally see yourself picking up the item. 5 seconds.", "why": "Visual scenes encode into a more durable type of memory."}]}], "id": "zabivaju"}, {"name": "Everything at Once", "problems": [{"name": "Everything feels equally important", "selftalk": ["\"Не умею приоритизировать\""], "skills": [{"skill": "What Burns First?", "todo": "\"What falls apart if I don't do it today?\" That's first.", "why": "The ADHD brain can't feel \"important but not urgent\". Loss threat triggers dopamine."}]}, {"name": "A 15-item to-do list", "selftalk": ["\"Должна все успеть\""], "skills": [{"skill": "Three Tasks", "todo": "Cross out everything except three. Seriously.", "why": "Short list doesn't overload working memory."}]}, {"name": "Don't know where to start", "selftalk": ["\"Плохо планирую\""], "skills": [{"skill": "Must / Should / Could", "todo": "Must = disaster right now! Should = problem in a week. Could = oh well, the world won't end.", "why": "Three buckets are simpler than an infinite hierarchy."}]}, {"name": "An hour planning instead of working", "selftalk": ["\"Нужен план\""], "skills": [{"skill": "5-Min Check-in", "todo": "Open calendar. Pick three. Close. Start.", "why": "Planning easily becomes procrastination in ADHD."}]}], "id": "vsesrazu"}, {"name": "Time Blindness", "problems": [{"name": "I can't feel how much time passed", "selftalk": ["\"Безответственная\""], "skills": [{"skill": "Visual Timer", "todo": "Time Timer on your desk where you can see it counting down.", "why": "The ADHD brain sees time visually. Replaces the broken internal metronome."}]}, {"name": "Always late", "selftalk": ["\"Плевать на людей\""], "skills": [{"skill": "Reverse Planning", "todo": "\"Be there at 2pm\". Subtract travel, prep, 15-min buffer. Set alarm for start.", "why": "ADHD underestimates prep time. Reverse countdown + buffer compensates."}]}, {"name": "\"5 minutes\" = an hour", "selftalk": ["\"Вру себе\""], "skills": [{"skill": "Week of Measurements", "todo": "Time your real duration for shower, prep, commute for a week. Write it down.", "why": "Real data calibrates your internal estimates."}]}, {"name": "I can't estimate how long things take", "selftalk": ["\"Плохо планирую\""], "skills": [{"skill": "Rule of x2", "todo": "Estimated the time? Multiply by two. Always.", "why": "ADHD consistently underestimates. Multiplier compensates the blind spot."}]}, {"name": "A distant deadline doesn't exist", "selftalk": ["\"Сделаю потом\""], "skills": [{"skill": "Mini-Deadlines", "todo": "Break into parts with deadlines every 1-2 days. With notifications.", "why": "Near deadline = dopamine. Far deadline = parallel universe."}]}], "id": "vremja"}, {"name": "Mess Everywhere", "problems": [{"name": "Hunting for keys and phone", "selftalk": ["\"Разгильдяйка\""], "skills": [{"skill": "Home Base", "todo": "Pick ONE spot for keys. Hook, bowl. ONLY there. Every time.", "why": "The ADHD brain doesn't search - it runs on muscle memory. One spot = one route."}]}, {"name": "Desk buried under stuff", "selftalk": ["\"Неряха\""], "skills": [{"skill": "One Function", "todo": "Desk = work. Remove everything else.", "why": "Mixed functions kill the \"place = action\" association."}]}, {"name": "Tidied up, forgot where things are", "selftalk": ["\"Ну и ладно\""], "skills": [{"skill": "No Lids", "todo": "Open baskets, clear containers.", "why": "Must open = won't open. Invisible = nonexistent."}]}, {"name": "Clutter keeps piling up", "selftalk": ["\"Когда-нибудь разберу\""], "skills": [{"skill": "30 Seconds", "todo": "Under 30 seconds to clean? Do it now. Don't think.", "why": "\"Later\" in ADHD never comes. 30 seconds needs no motivation."}]}], "id": "bardak"}], "id": "fokus"}, {"name": "Emotions & Energy", "categories": [{"name": "Emotional Rollercoaster", "problems": [{"name": "I explode, then regret it", "selftalk": ["\"Неуравновешенная\""], "skills": [{"skill": "90 Seconds", "todo": "Leave the room. Don't send the message. 90 seconds.", "why": "The neurochemical wave of an emotion lasts ~90 sec. Then it drops."}]}, {"name": "The emotion floods me", "selftalk": ["\"Слишком эмоциональная\""], "skills": [{"skill": "Naming", "todo": "Say aloud: \"I'm feeling rage right now\". Name it precisely.", "why": "Naming activates PFC, which starts putting the brakes on the amygdala."}]}, {"name": "No reply = I'm not wanted", "selftalk": ["\"Слишком чувствительная\""], "skills": [{"skill": "Fact or Interpretation?", "todo": "Fact: \"she didn't reply for 3 hours\". Interpretation: \"she thinks I'm incompetent\". Compare.", "why": "Separating your interpretation from fact gives the brain time to intervene."}]}, {"name": "Criticism = catastrophe", "selftalk": ["\"Не выношу правду\""], "skills": [{"skill": "Win File", "todo": "Note with successes, compliments, achievements. Read during RSD. You've done more than most.", "why": "Counter-arguments for PFC. The amygdala hides the positive; the file brings it back."}]}, {"name": "I react before I think", "selftalk": ["\"Агрессивная\""], "skills": [{"skill": "Physical Pause", "todo": "Stand up. Leave. Phone in pocket.", "why": "Physical action interrupts the emotional cascade at body level."}]}, {"name": "On edge for no reason", "selftalk": ["\"Нестабильная\""], "skills": [{"skill": "Base Checklist", "todo": "When did you last eat? Drink water? How much sleep?", "why": "Dysregulation spikes with hunger, dehydration, sleep deprivation."}]}, {"name": "I dwell on things for days", "selftalk": ["\"Зацикленная\""], "skills": [{"skill": "Time Scale", "todo": "\"Will this matter in a week? A month? A year?\" If not, let it go.", "why": "Time scaling helps the brain stop perceiving the situation as critical."}]}, {"name": "Afraid they see my flaws", "selftalk": ["\"Ненормальная\""], "skills": [{"skill": "Code Word", "todo": "Agree with someone close: they say a word during RSD. No judgment.", "why": "RSD is invisible from inside. External anchor returns you to reality."}]}], "id": "emoskach"}, {"name": "Fear of Rejection (RSD)", "problems": [{"name": "Disproportionate reaction to rejection", "selftalk": ["\"Слишком чувствительная\""], "skills": [{"skill": "Win File", "todo": "Note with success facts. Read during attacks.", "why": "Counter-data for the PFC against panic."}]}, {"name": "I imagine rejection everywhere", "selftalk": ["\"Что-то со мной не так\""], "skills": [{"skill": "Fact vs Interpretation", "todo": "\"Didn't reply\" = fact. \"Doesn't care\" = assumption. Write both down.", "why": "RSD presents interpretation as fact."}]}, {"name": "RSD attack", "selftalk": ["\"Не могу это контролировать\""], "skills": [{"skill": "Code Word", "todo": "Agree: a word during RSD attack.", "why": "Invisible from inside. External anchor."}]}, {"name": "Impulsive reaction to criticism", "selftalk": ["\"Я неадекватная\""], "skills": [{"skill": "90 Seconds", "todo": "Don't reply. Don't write. Leave. 90 seconds.", "why": "The wave subsides. Thinking gets easier."}]}], "id": "rsd"}, {"name": "Shame", "problems": [{"name": "Postponing my life", "selftalk": ["\"Еще не готова\""], "skills": [{"skill": "Do It Dirty", "todo": "Start. Send. Publish. As is. Right now.", "why": "Perfectionism in ADHD = RSD in disguise."}]}, {"name": "I forgot = I'm a bad person", "selftalk": ["\"Безответственная\""], "skills": [{"skill": "Fact, Not Verdict", "todo": "\"I forgot\" = fact. \"I'm irresponsible\" = verdict.", "why": "Brain confuses behavior and identity. Skill: catch the swap."}]}, {"name": "Comparing myself to colleagues", "selftalk": ["\"Все могут, я нет\""], "skills": [{"skill": "Different Engine", "todo": "Different architecture. Comparison is invalid.", "why": "Fish don't climb trees. Not a fish defect."}]}, {"name": "I only see what's undone", "selftalk": ["\"Ничего не достигаю\""], "skills": [{"skill": "Done List", "todo": "Three things you did today. Any. Every evening.", "why": "ADHD hyperfocuses on negatives. Logging recalibrates the critic."}]}], "id": "styd"}, {"name": "No Energy", "problems": [{"name": "Fine in the morning, a zombie by afternoon", "selftalk": ["\"Должна ровно весь день\""], "skills": [{"skill": "Productivity Windows", "todo": "Track flow and dead zones for a week. Put hard stuff in flow windows.", "why": "Against the wave = triple resource drain."}]}, {"name": "Falling apart before my period", "selftalk": ["\"Слабая\""], "skills": [{"skill": "Cycle as Factor", "todo": "Track menstrual phases. Don't plan ambitious things for the luteal phase.", "why": "Follicular: more dopamine. Luteal: ADHD intensifies."}]}, {"name": "Burning out after intense work", "selftalk": ["\"Все могут\""], "skills": [{"skill": "Buffer Time", "todo": "15 minutes of nothing between tasks. In calendar.", "why": "Without a buffer, \"switching debt\" accumulates."}]}, {"name": "Guilt when resting", "selftalk": ["\"Отдых = лень\""], "skills": [{"skill": "Planned Rest", "todo": "\"Rest\" in calendar as a task. With time and duration.", "why": "Without recovery the brain breaks. Maintenance, not laziness."}]}], "id": "netsil"}, {"name": "Thought Loops", "problems": [{"name": "Spinning one thought for hours", "selftalk": ["\"Должна додумать\""], "skills": [{"skill": "Brain Dump", "todo": "Paper or voice note. Dump everything. Don't solve.", "why": "The brain stops fearing it will \"forget to think about it\"."}]}, {"name": "Can't let go of a problem", "selftalk": ["\"Думать дольше = решу\""], "skills": [{"skill": "Action Test", "todo": "\"Can I do something right now?\" Yes = action. No = it's anxiety.", "why": "Anxiety disguises itself as analysis."}]}, {"name": "Replaying a conflict", "selftalk": ["\"Нужно понять кто прав\""], "skills": [{"skill": "Timer", "todo": "10 minutes with timer. After signal - stand up, go have tea.", "why": "Permission relieves anxiety. Timer gives an exit point."}]}, {"name": "Can't stop the thoughts", "selftalk": ["\"Схожу с ума\""], "skills": [{"skill": "Body", "todo": "Shower. Walk. Change rooms.", "why": "Cognitively impossible to stop. Body reboots context."}]}, {"name": "Analyzing with no result", "selftalk": ["\"Нужно больше данных\""], "skills": [{"skill": "Say It Aloud", "todo": "Call someone. Warn them you're about to brain-dump on them.", "why": "The loop breaks once you can hear it. You notice the circle."}]}], "id": "misli"}], "id": "emocii"}, {"name": "Communication", "categories": [{"name": "Relationship Conflicts", "problems": [{"name": "\"You never listen!\"", "selftalk": ["\"Мне все равно\""], "skills": [{"skill": "Explain the Mechanism", "todo": "\"My brain can't hold verbal info during a task. Please text me.\"", "why": "Instruction works better than apology."}]}, {"name": "I forget what was said", "selftalk": ["\"Не ценю людей\""], "skills": [{"skill": "Ask for Text", "todo": "\"Can you write it? I'll definitely remember that way.\"", "why": "Text exists after the moment. Verbal doesn't in ADHD."}]}, {"name": "My partner feels forgotten", "selftalk": ["\"Плохая партнерша\""], "skills": [{"skill": "Check-in", "todo": "\"What do you need from me right now?\" Once a day.", "why": "Direct question replaces guessing."}]}, {"name": "Can't switch into a conversation", "selftalk": ["\"Мне плевать\""], "skills": [{"skill": "Honest Pause", "todo": "\"Can't listen well right now. Give me 10 minutes and I'm all yours.\"", "why": "Honesty preserves relationships. Pretending to listen destroys them."}]}], "id": "konflikt"}, {"name": "Already Got It, Still Talking", "problems": [{"name": "My brain got it, they keep talking", "selftalk": ["\"Нетерпеливый, грубый\""], "skills": [{"skill": "Mental Summary", "todo": "Build a 3-bullet summary in your head while they're talking.", "why": "Give the brain a job and it stops rebelling."}]}, {"name": "Want to shout \"I got it!\"", "selftalk": ["\"Не умею слушать\""], "skills": [{"skill": "Physical Patience Anchor", "todo": "Clench fist, touch table, deep breath.", "why": "Body \"holds\" you in the conversation."}]}, {"name": "They paused — urge to blurt it out", "selftalk": ["\"Грубый\""], "skills": [{"skill": "Turn It Into a Question", "todo": "\"So the key point is that...?\" Don't start with \"I already know\"", "why": "The speaker gets to wrap up via your question. Respect + tempo control."}]}, {"name": "Agony of waiting for them to finish", "selftalk": ["\"Нетерпеливый\""], "skills": [{"skill": "30-Second Rule", "todo": "Listen 30 more seconds. Micro-task: \"I'm just sitting for 30 seconds.\"", "why": "People talk to organize their own thoughts. 30 seconds = relationship investment."}]}], "id": "ponjal"}, {"name": "Interrupting & Blurting", "problems": [{"name": "The thought is burning to get out", "selftalk": ["\"Невоспитанный\""], "skills": [{"skill": "3-Second Rule", "todo": "Speaker finishes - count: one, two, three. Then speak.", "why": "Micro-gap between impulse and action. PFC gets time."}]}, {"name": "Afraid of losing the thought", "selftalk": ["\"Не могу контролировать\""], "skills": [{"skill": "Write the Thought", "todo": "Jot it on paper instead of firing it into the conversation.", "why": "Writing tells the brain \"it's saved, you can keep listening.\" Reduces loss anxiety."}]}, {"name": "I blurt things out", "selftalk": ["\"Агрессивный\""], "skills": [{"skill": "Paraphrase First", "todo": "\"So you're saying that...\" Then your response.", "why": "Double benefit: speaker feels heard + you check if it's worth saying."}]}, {"name": "The urge to interrupt", "selftalk": ["\"Не контролирую себя\""], "skills": [{"skill": "\"Stop\" Anchor", "todo": "Clench fist when you feel the urge to interrupt. Every time.", "why": "After 2-3 weeks body associates the gesture with \"wait\". Conditioning."}]}], "id": "perebivaju"}], "id": "obschenie"}], "emotions": [{"name": "Anger", "weak": "irritation, annoyance, frustration, dissatisfaction", "mid": "anger, rage, indignation, resentment, hurt", "strong": "fury, hatred, contempt, blind rage", "body": "clenched fists, heat in chest, jaw tension, rapid breathing", "message": "Your boundaries are violated. Something important to you is under threat. Or you sense injustice."}, {"name": "Fear", "weak": "worry, anxiety, unease, wariness", "mid": "fear, panic, terror, fright", "strong": "paralyzing horror, phobia, derealization", "body": "cold in stomach, sweaty palms, racing pulse, urge to flee", "message": "Brain detects a threat (real or imagined). In ADHD, often triggered by social situations (RSD)."}, {"name": "Sadness", "weak": "disappointment, gloom, longing, melancholy", "mid": "sadness, grief, sorrow, loneliness", "strong": "despair, emptiness, hopelessness", "body": "heaviness in chest, lump in throat, tears, urge to curl up", "message": "You've lost something important (or feel you're about to). Need for support and acceptance."}, {"name": "Shame", "weak": "awkwardness, embarrassment, shyness", "mid": "shame, guilt, humiliation", "strong": "toxic shame, feeling 'I am defective'", "body": "heat in face, urge to disappear, avoiding eye contact, shrinking", "message": "You feel you don't meet a standard (often someone else's). In ADHD, shame is chronically elevated from years of criticism."}, {"name": "Joy", "weak": "satisfaction, interest, liveliness, calm", "mid": "joy, delight, euphoria, infatuation", "strong": "ecstasy, mania, uncontrollable high", "body": "lightness in body, smile, energy, urge to move and share", "message": "A need is met. You're safe and connected. In ADHD, joy can be explosive and short-lived."}, {"name": "Disgust", "weak": "dislike, boredom, feeling fed up", "mid": "disgust, revulsion, repulsion", "strong": "nausea, gag reflex, physical rejection", "body": "nausea, turning away, wrinkled nose, urge to push away", "message": "Something violates your values or physical boundaries. Signal: 'this is not for me'."}, {"name": "Surprise", "weak": "curiosity, interest, bewilderment", "mid": "surprise, shock, amazement", "strong": "being stunned, disorientation, stupor", "body": "wide eyes, open mouth, freezing, then energy burst", "message": "Reality didn't match your expectations. Brain is rebuilding its model. In ADHD, can trigger hyperfocus on the new thing."}, {"name": "Envy", "weak": "comparison, dissatisfaction, 'I want that too'", "mid": "envy, jealousy, bitterness", "strong": "hatred of others' success, self-destruction", "body": "tightness in chest, bitterness, obsessive thoughts about others' success", "message": "You see in others what you want for yourself. Envy is a compass: it points to your real desires."}], "traps": [{"name": "Catastrophizing", "what": "Worst-case scenario feels like the only possible outcome", "example": "She didn't reply > she hates me > I'll get fired > I'll end up homeless", "todo": "Ask: what's the realistic probability? What's most likely to happen?", "adhd": "Your brain is wired to spot danger. Missing a real threat is more costly than a false alarm, so it defaults to worst-case. Great instinct for dodging predators. Terrible instinct for reading texts."}, {"name": "Mind Reading", "what": "You 'know' what others think (usually something bad)", "example": "He looked at me that way - he definitely thinks I'm stupid", "todo": "You're not a telepath. Write down: what did he DO? What did you ASSUME?", "adhd": "Your brain can't stand not knowing. When someone's thoughts are unclear, it fills the gap - and because the threat system runs the show, it fills it with the worst option. Just in case."}, {"name": "Black-and-White Thinking", "what": "Only two options: perfect or terrible. No middle ground", "example": "If I don't do this 100%, I'm a total failure", "todo": "Find a third option. 'Done at 70% - is that good enough?'", "adhd": "Sorting things into shades takes effort. Splitting them into good/bad is fast and cheap. Your brain takes the shortcut. Handy for survival, less handy for real life."}, {"name": "Discounting the Positive", "what": "Successes don't count, but failures are real", "example": "Promotion? Just luck. But that task I failed - that's the real me", "todo": "Win file. Write down every success. Reread it.", "adhd": "Bad memories stick harder than good ones. It's called negativity bias - your brain files threats in bold and highlights, while good stuff gets buried in the footnotes."}, {"name": "Emotional Reasoning", "what": "I feel it = it must be true", "example": "I feel worthless - therefore I am worthless", "todo": "Emotion is not evidence. 'I FEEL worthless' != 'I AM worthless'.", "adhd": "Your brain treats emotions as data - just like what you see or hear. It doesn't stop to check whether the feeling matches reality. It just reacts."}, {"name": "Should Statements", "what": "'Should', 'must', 'have to' - applied to yourself and others", "example": "I should be organized. He should have understood", "todo": "Replace 'should' with 'want to' or 'it would be nice'. See Demand Avoidance section.", "adhd": "These are rules you absorbed growing up - from family, school, the world around you. Your brain stored them as absolute laws because breaking them used to have consequences."}, {"name": "Labeling", "what": "Turning a behavior into a personality diagnosis", "example": "Forgot a meeting = 'I'm irresponsible'. Not 'I forgot' but 'I AM like that'", "todo": "Separate fact from verdict. 'I forgot' = behavior. 'Irresponsible' = label.", "adhd": "Your brain loves shortcuts. 'I'm forgetful' is faster to process than 'I forgot one specific thing in one specific situation.' Labels are efficient. They're also wrong."}, {"name": "Personalization", "what": "Everything that happens is somehow about you", "example": "Colleague is frowning = I must have done something wrong", "todo": "Not everything is about you. People have their own lives. Ask if unsure.", "adhd": "Your brain is constantly scanning: am I safe in this group? Anything that could mean you're losing standing gets flagged as urgent. Old wiring - back when getting kicked out of the tribe meant you were dead."}, {"name": "Overgeneralization", "what": "One incident becomes a rule", "example": "One failed presentation = 'I always fail'", "todo": "'Always? Really? Name three times it went OK.'", "adhd": "One vivid moment sticks harder than ten forgettable ones. Your brain writes rules based on what it remembers most, and what it remembers most is whatever hit hardest emotionally."}, {"name": "Mental Filter", "what": "Out of 100 events, you see only the one negative", "example": "99 kind comments and 1 criticism. You remember only the criticism", "todo": "Read all 100. Literally. Count the ratio.", "adhd": "Your brain filters by threat level. Negative stuff passes through first. It's not a choice you're making - it's how the filter is built."}, {"name": "Fortune Telling", "what": "You 'know' the future (it's bad)", "example": "No point trying - it won't work anyway", "todo": "You're not a prophet. What do facts say? Has it worked before?", "adhd": "Your brain makes predictions based on past experience, but the database is skewed. Failures are stored in high-def. Successes are filed away in some drawer you never open."}, {"name": "Minimization", "what": "Shrink your achievements, magnify others'", "example": "She has real talent, I just got lucky", "todo": "Imagine a friend said about herself what you say about you. Would you agree?", "adhd": "You hold yourself to a different standard than everyone else. You're harsh with yourself because you feel responsible for your own actions. You're generous with others because you don't see their struggle. Your brain doesn't notice the double standard."}, {"name": "Tunnel Vision", "what": "Focus on one aspect, everything else vanishes", "example": "One mistake in a project = entire project is a failure", "todo": "Step back. Look at the whole picture. What else is there besides the mistake?", "adhd": "Your attention goes where anxiety is. One error lights up the alarm, and the brain throws all its resources at that spot. Everything else fades out - not because it's gone, but because your brain stopped looking."}, {"name": "Magical Thinking", "what": "'If I worry enough, it will prevent bad things'", "example": "Can't stop worrying - what if something bad happens if I relax?", "todo": "Worry doesn't protect. It drains energy. What can you actually do?", "adhd": "Your brain can't handle feeling powerless. Doing nothing feels unbearable, so it does the next best thing: it worries. Worrying feels like action. It's not - but it scratches that itch."}, {"name": "Just World Fallacy", "what": "'If I'm good enough, I'll be treated well'", "example": "I tried so hard and they didn't appreciate me - it's unfair!", "todo": "The world isn't fair. But you can choose who you surround yourself with.", "adhd": "Your brain craves predictability. It looks for patterns, for cause and effect, even when there are none. 'If I'm good, good things will happen' is your brain trying to make chaos feel manageable."}, {"name": "Comparison", "what": "Constantly comparing yourself to 'normal' people", "example": "She organizes her life easily, I can't even find my keys", "todo": "Different architecture. You see her result, not her process. Not her brain.", "adhd": "Comparing yourself to others is how your brain figures out where you stand. The problem is, you're comparing your inner mess with someone else's polished surface. That math will never work."}, {"name": "Effort Minimization", "what": "'If it's hard for me, I must be doing it wrong'", "example": "Others do this easily, but for me it takes everything I've got", "todo": "Hard doesn't mean wrong. Your brain spends more resources on the same task.", "adhd": "Your brain has a simple rule: if something costs too much energy, you're probably doing it inefficiently. That rule works great for physical tasks. It's completely wrong for cognitive ones."}, {"name": "Reverse Telepathy", "what": "'They should have figured out what I need'", "example": "He should have known I was hurt, without me saying anything", "todo": "Say it directly. People aren't telepaths. A clear request isn't weakness.", "adhd": "Your brain assumes that what's obvious to you is obvious to everyone. You feel your emotions so intensely that it seems impossible others don't notice. But they don't. They're busy running their own brain."}, {"name": "False Dilemma", "what": "'Either I do this perfectly right now, or not at all'", "example": "No time for a full workout - so no point going at all", "todo": "15 minutes > 0 minutes. 70% > 0%. Messy > nothing.", "adhd": "Your brain pairs all-or-nothing thinking with a need for control. If you can't guarantee a great outcome, it would rather not play at all. That way you avoid both uncertainty and the chance of falling short."}, {"name": "Motive Projection", "what": "'They did this on purpose to hurt me'", "example": "She didn't invite me - she's deliberately excluding me", "todo": "Malice or carelessness? What's more likely? Ask directly.", "adhd": "When your brain can't explain someone's behavior, it defaults to threat: 'I don't know why they did that, so I'll assume the worst.' It's an ancient safety mechanism. Useful in the wild. Exhausting in the office."}]}};
+const I18N_DESC = {"ru": {"nemogu": {"quote": "«Я ленивая, я просто тяну до последнего»", "text": "Знаешь что делать. Понимаешь зачем. Может даже хочешь. Но тело не двигается. Ты сидишь, смотришь на задачу, и между тобой и ней - стеклянная стена. Это не лень. При ADHD дофамин, который нужен для запуска действия, не вырабатывается в ответ на 'важно' или 'надо'. Ему нужно 'интересно', 'срочно' или 'новое'. Поэтому ты можешь часами не начать отчет, но мгновенно увлечься случайной статьей. Мозг не сломан - у него другие условия запуска. И к ним есть ключи."}, "zalipaju": {"quote": "«Еще 5 минут... ладно, еще 5...»", "text": "Гиперфокус - это твоя суперсила. В этом состоянии ты можешь за три часа сделать то, на что у других уходит неделя. Проблема в том, что у суперсилы нет кнопки 'выкл'. Ты проваливаешься на часы, не замечаешь времени, забываешь поесть, не слышишь людей, пропускаешь встречи. Навыки здесь не про то, чтобы убрать гиперфокус, а про то, чтобы научиться из него выходить."}, "nado": {"quote": "«Я саботирую себя, я инфантильная»", "text": "Знакомо? Ты хочешь сделать задачу. Реально хочешь. Но стоит кому-то сказать 'надо' или 'ты должна', или даже самой себе это подумать - и внутри что-то схлопывается. Тело каменеет, мозг отказывается, появляется тошнотворное сопротивление. Ты можешь просидеть час, два, три - и не сдвинуться. Это demand avoidance. Автономная нервная система воспринимает 'надо' как угрозу и включает реакцию 'замри'. Это не лень, не саботаж, не инфантильность. Это нейрология. И есть способы обойти."}, "otvlek": {"quote": "«У меня дефицит внимания, я не могу сосредоточиться»", "text": "Ты садишься за задачу, и через пять минут обнаруживаешь себя в телефоне, в другой вкладке, в разговоре, в мыслях о вчерашнем. Не потому что тебе плевать. ADHD-мозг не фильтрует входящие сигналы как нейротипичный: для него уведомление, шум за окном и твоя задача - одинаково громкие. Но есть и хорошая новость: ADHD-внимание работает не линейно, а параллельно. Ты реально можешь делать несколько вещей одновременно, и это не баг, а архитектура."}, "zabivaju": {"quote": "«Я безответственная, мне все равно»", "text": "Тебе сказали задачу - ты кивнула и через минуту не помнишь. Записала 'позвонить Маше' - и не помнишь зачем. Положила ключи - и они растворились. Это не 'тебе все равно' и не деменция. Рабочая память при ADHD - как маленький стол: помещается 2-3 предмета, и каждый новый входящий сигнал сбрасывает предыдущий на пол. Нейротипичные люди автоматически перекладывают с этого стола в долгосрочную память. У тебя этот конвейер работает с перебоями. Поэтому нужны внешние костыли - и это не стыдно, это инженерное решение."}, "vsesrazu": {"quote": "«Я должна все успеть, но не знаю за что взяться»", "text": "Перед тобой список из 15 задач, и каждая кричит одинаково громко. Нейротипичный мозг автоматически ранжирует: вот это важное, это подождет, а это ерунда. ADHD-мозг так не умеет. Для него все одинаково яркое, одинаково срочное, одинаково давящее. Результат - паралич. Ты не делаешь ничего, потому что не можешь выбрать, что делать первым. Нужна внешняя система сортировки, потому что внутренняя при ADHD не работает."}, "vremja": {"quote": "«Я безответственная, мне плевать на людей»", "text": "Time blindness - ты не чувствуешь, сколько прошло. 5 минут = час. Дедлайн через неделю = не существует. У тебя есть два времени: 'сейчас' и 'не сейчас'. И 'не сейчас' существует в параллельной вселенной. Нейробиология: у нейротипичных дорсолатеральная ПФК и мозжечок создают внутренний метроном. При ADHD этот метроном сбит - дофамин, нужный для 'тиканья' внутренних часов, в дефиците. Поэтому время не течет, а телепортируется."}, "bardak": {"quote": "«Я неряха, я разгильдяйка»", "text": "Ключи? Были где-то тут. Телефон? Только что держала в руках. Стол? Под слоем всего. Это не лень и не неряшливость. ADHD-мозг не автоматизирует привычку 'положить на место' так, как нейротипичный. Плюс правило параллельной вселенной: если вещь не в поле зрения, она не существует. Убрала в закрытый ящик - все, забыла что она есть. Навыки - про создание среды, которая работает на твой мозг: все видимо, все на своем месте, все доступно."}, "emoskach": {"quote": "«Я неуравновешенная, слишком эмоциональная»", "text": "Кто-то не ответил на сообщение - и тебя накрывает: 'я не нужна, меня игнорируют'. Коллега сделала замечание - весь день разрушен. Радость тоже бьет: восторг, эйфория, резкий откат. ADHD - это не только про внимание, это про интенсивность эмоций. Амигдала срабатывает быстрее и мощнее, а ПФК подключается с опозданием. Ты чувствуешь все на 10 из 10, когда другие на 4. Это нейрохимия, и есть навыки, чтобы не тонуть в волнах."}, "rsd": {"quote": "«Я слишком чувствительная, что-то со мной не так»", "text": "Подруга не позвала на обед - взрыв: 'она меня ненавидит'. Начальник сказал 'надо доработать' - слышишь 'ты никчемная'. Кто-то посмотрел странно - полдня разбираешь, что сделала не так. Это RSD - Rejection Sensitivity Dysphoria. Твоя амигдала интерпретирует нейтральные сигналы как отвержение и бьет тревогу раньше, чем разум проверит факты. Дофаминовый дефицит делает систему угрозы гиперчувствительной к социальным сигналам."}, "styd": {"quote": "«Я ничего не достигаю, все могут, а я нет»", "text": "К 30-40 годам человек с ADHD получает в 20 000 раз больше негативной обратной связи, чем нейротипичный. 'Соберись', 'ты опять', 'все могут, а ты'. Внутренний критик говорит голосами учителей, родителей, бывших. Ты путаешь поведение с идентичностью: не 'я забыла', а 'я безответственная'. Перфекционизм при ADHD - это щит от стыда: 'если идеально, меня не отвергнут'. И этот же щит парализует."}, "netsil": {"quote": "«Все работают весь день, а я сдуваюсь»", "text": "Утром ты ракета - идеи, энергия, поток. После обеда - мокрая тряпка. Или наоборот: до 16:00 овощ, а в 22:00 наконец включаешься. Энергия при ADHD идет волнами, и работать в 'мертвой зоне' - грести против течения. У женщин второй цикл поверх первого: гормональный. Фолликулярная фаза - больше дофамина, лютеиновая - ADHD усиливается. Навык - не бороться с волной, а серфить."}, "misli": {"quote": "«Если подумаю еще немного, найду решение»", "text": "Лежишь в три часа ночи и прокручиваешь разговор, который был вчера. Или год назад. Мозг говорит: 'еще подумай - решишь'. Но ты ходишь по кругу. Одна мысль, одна эмоция, снова и снова. ADHD-мозг плохо 'отпускает': ПФК, которая должна сказать 'хватит', работает медленнее. А эмоциональная интенсивность подкармливает петлю: переживание ощущается как действие, хотя ничего не происходит."}, "konflikt": {"quote": "«Мне плевать на людей, я плохая партнерша»", "text": "'Ты не слушаешь!' 'Ты опять забыла!' 'Тебе вообще важно?' Ты слушаешь, но рабочая память не удерживает устное в потоке. Тебе не все равно, но переключение внимания не подчиняется воле. Ты не игнорируешь - ты буквально не можешь обработать входящий сигнал в этот момент. Для партнера это безразличие. Для тебя - невозможность. Навыки - про то, как объяснить механизм и построить коммуникацию, которая работает для обоих."}, "ponjal": {"quote": "«Я нетерпеливый, грубый, не умею слушать»", "text": "Мозг уже построил картину, нашел решение, готов двигаться. А собеседник все еще раскладывает детали, повторяется, идет к финалу по спирали. Каждая секунда - агония. Хочется крикнуть 'Я все понял!' - но это обесценит его и разрушит разговор."}, "perebivaju": {"quote": "«Я грубый, невоспитанный, не могу себя контролировать»", "text": "Мысль горит, рвется наружу. Кажется, если не сказать прямо сейчас - она исчезнет навсегда. И это правда: рабочая память при ADHD короткая, мысль действительно может пропасть. Но перебивание разрушает разговоры и отношения."}}, "en": {"nemogu": {"quote": "I'm lazy, I just procrastinate", "text": "You know what to do. You understand why. You might even want to. But your body won't move. You sit, staring at the task, and there's a glass wall between you and the task. This isn't laziness. In ADHD, the dopamine needed to initiate action doesn't respond to 'important' or 'should'. It needs 'interesting', 'urgent', or 'new'. That's why you can't start a report for hours but instantly dive into a random article. Your brain isn't broken - it has different launch conditions. And you can learn to work them."}, "zalipaju": {"quote": "Just 5 more minutes... okay, 5 more...", "text": "Hyperfocus is your superpower. In this state you can do in three hours what takes others a week. The problem is your superpower has no 'off' button. You disappear into it for hours, don't notice time, forget to eat, can't hear people, miss meetings. The skills here aren't about removing hyperfocus - they're about learning to exit it."}, "nado": {"quote": "I sabotage myself, I'm infantile", "text": "Sound familiar? You want to do the task. Really want to. But the moment someone says 'you must' or 'you should', or you even think it yourself, something collapses inside. Your body turns to stone, your brain refuses, this sick, physical resistance kicks in. You can sit for one, two, three hours and not budge. This is demand avoidance. Your autonomic nervous system perceives 'must' as a threat and triggers a 'freeze' response. It's not laziness, not sabotage, not immaturity. It's neurology. And there are ways around it."}, "otvlek": {"quote": "I have attention deficit, I can't focus", "text": "You sit down to work, and five minutes later you're in your phone, another tab, a conversation, yesterday's thoughts. Not because you don't care. The ADHD brain doesn't filter incoming signals like a neurotypical one: a notification, street noise, and your task are equally loud. But here's the good news: ADHD attention works not linearly but in parallel. You can genuinely do multiple things at once, and that's not a bug - it's architecture. Skills here are about directing that parallel stream, not fighting it."}, "zabivaju": {"quote": "I'm irresponsible, I don't care", "text": "Someone told you a task - you nodded and a minute later don't remember. Wrote 'call Maria' - don't remember why. Put down your keys - they dissolved. This isn't 'you don't care' and it's not dementia. Working memory in ADHD is like a tiny desk: fits 2-3 items, and every new signal knocks the previous one to the floor. Neurotypical people automatically transfer from this desk to long-term memory. In your brain, that conveyor belt glitches. That's why you need external crutches - and that's not shameful, it's engineering."}, "vsesrazu": {"quote": "I should get everything done but don't know where to start", "text": "You have a list of 15 tasks, and each one screams equally loud. A neurotypical brain automatically ranks: this is important, that can wait, this is nonsense. The ADHD brain can't. Everything is equally bright, equally urgent, equally pressing. Result: paralysis. You do nothing because you can't choose what to do first. You need an external sorting system because the internal one doesn't work in ADHD."}, "vremja": {"quote": "I'm irresponsible, I don't care about people", "text": "Time blindness - you can't feel how much time has passed. 5 minutes = an hour. A deadline next week = doesn't exist. You have two times: 'now' and 'not now'. And 'not now' exists somewhere in a parallel universe. Neurobiology: in neurotypicals, the dorsolateral prefrontal cortex and cerebellum create an internal metronome. In ADHD this metronome is broken - dopamine needed for the internal clock's 'ticking' is deficient. So time doesn't flow, it teleports."}, "bardak": {"quote": "I'm a slob", "text": "Keys? They were right here. Phone? Just had it. Desk? Under a layer of everything. This isn't laziness or sloppiness. The ADHD brain doesn't automate the habit of 'putting things in place' like a neurotypical one. Plus the parallel universe rule: if something isn't in your field of vision, it doesn't exist. Put it in a closed drawer - gone, forgot it exists."}, "emoskach": {"quote": "I'm unbalanced, too emotional", "text": "Someone didn't reply to your message and you're hit with a wave: 'I'm not needed, I'm being ignored'. A colleague made a comment - your whole day is ruined. Joy hits hard too: excitement, euphoria, then a sharp crash. ADHD isn't just about attention - it's about emotional intensity. The amygdala fires faster and harder, while the prefrontal cortex (the brake) engages late. You feel everything at 10 out of 10 when others feel it at a 4. This is neurochemistry, and there are skills to not drown in these waves."}, "rsd": {"quote": "I'm too sensitive, something's wrong with me", "text": "A friend didn't invite you to lunch - explosion: 'she hates me'. Boss said 'needs work' - you hear 'you're worthless'. Someone looked at you oddly - you spend half the day analyzing what you did wrong. This is RSD - Rejection Sensitivity Dysphoria. Your amygdala interprets neutral signals as rejection and sounds the alarm before your mind can check the facts. Dopamine deficit makes the threat system hypersensitive to social signals."}, "styd": {"quote": "I achieve nothing, everyone can but I can't", "text": "By age 30-40, a person with ADHD has received 20,000 more negative messages than a neurotypical. 'Get it together', 'you again', 'everyone else manages, why can't you'. Your inner critic speaks in the voices of teachers, parents, exes. You confuse behavior with identity: not 'I forgot' but 'I'm irresponsible'. Perfectionism in ADHD is a shield against shame: 'if I'm perfect, I won't be rejected'. And that same shield paralyzes."}, "netsil": {"quote": "Everyone works all day, I just deflate", "text": "Morning you're a rocket - ideas, energy, flow. After lunch - a limp rag. Or the reverse: a vegetable until 4pm, then finally switching on at 10pm. ADHD energy comes in waves, and forcing yourself to work in the 'dead zone' is rowing against the current. For women there's a second cycle on top: hormonal. Follicular phase = more dopamine, luteal = ADHD intensifies. The skill is not fighting the wave but surfing it."}, "misli": {"quote": "If I think a bit more, I'll find the solution", "text": "Lying awake at 3am replaying a conversation from yesterday. Or a year ago. Your brain says: 'think more and you'll solve it'. But you're going in circles. Same thought, same emotion, over and over. The ADHD brain struggles to 'let go': the PFC that should say 'enough, switch' works slower. And emotional intensity feeds the loop: ruminating feels like action, though nothing is happening."}, "konflikt": {"quote": "I don't care about people, I'm a bad partner", "text": "'You're not listening!' 'You forgot again!' 'Do you even care?' You are listening, but working memory can't hold verbal info while you're in your flow. You do care, but attention switching doesn't obey willpower. You're not ignoring - you literally can't process the incoming signal at that moment. To your partner it looks like indifference. For you it's simply not possible."}, "ponjal": {"quote": "I'm impatient, rude, can't listen to the end", "text": "Your brain has already built the picture, found the solution, ready to move. But the other person is still laying out details, repeating, circling toward their point. Every second is agony. You want to shout 'I get it!' - but that would dismiss them and destroy the conversation."}, "perebivaju": {"quote": "I'm rude, ill-mannered, can't control myself", "text": "A thought is burning, bursting to get out. It feels like if you don't say it right now, it'll vanish forever. And that's true: working memory in ADHD is short, the thought really might disappear. But interrupting destroys conversations and relationships."}}};
+const ZONE_IMG = {"zapusk": "cards/zone1_zapusk.png", "fokus": "cards/zone2_fokus.png", "emocii": "cards/zone3_emocii.png", "obschenie": "cards/zone4_obschenie.png"};
+const CAT_IMG = {"nemogu": "cards/cat01_nemogu.png", "zalipaju": "cards/cat02_zalipaju.png", "nado": "cards/cat03_nado.png", "otvlek": "cards/cat04_otvlek.png", "zabivaju": "cards/cat05_zabivaju.png", "vsesrazu": "cards/cat06_vsesrazu.png", "vremja": "cards/cat07_vremja.png", "bardak": "cards/cat08_bardak.png", "emoskach": "cards/cat09_emoskach.png", "rsd": "cards/cat10_rsd.png", "styd": "cards/cat11_styd.png", "netsil": "cards/cat12_netsil.png", "misli": "cards/cat13_misli.png", "konflikt": "cards/cat14_konflikt.png", "ponjal": "cards/cat15_ponjal.png", "perebivaju": "cards/cat16_perebivaju.png"};
+const EMO_IMG = {
+  ru: ["cards/emo01_zlo.png","cards/emo02_strah.png","cards/emo03_grust.png","cards/emo04_styd.png",
+       "cards/emo05_radost.png","cards/emo06_otvrash.png","cards/emo07_udivlenie.png","cards/emo08_zavist.png"],
+  en: ["cards/emo01_zlo.png","cards/emo02_strah.png","cards/emo03_grust.png","cards/emo04_styd.png",
+       "cards/emo05_radost.png","cards/emo06_otvrash.png","cards/emo07_udivlenie.png","cards/emo08_zavist.png"]
+};
+const TRAP_IMG = ["cards/trap01_katastrofa.png","cards/trap02_mindread.png","cards/trap03_chernobeloe.png",
+"cards/trap04_obescenivanie.png","cards/trap05_emorazum.png","cards/trap06_dolzhen.png","cards/trap07_yarlyk.png",
+"cards/trap08_personaliz.png","cards/trap09_sverhobob.png","cards/trap10_mentalfiltr.png","cards/trap11_predskazanie.png",
+"cards/trap12_preumen.png","cards/trap13_tunnel.png","cards/trap14_magic.png","cards/trap15_spravedlivost.png",
+"cards/trap16_sravnenie.png","cards/trap17_minimizaciya.png","cards/trap18_telepatia2.png","cards/trap19_dilemma.png",
+"cards/trap20_proekciya.png"];
+</script>
+<script>
+
+/* ================= Helpers ================= */
+const $ = (sel, root) => (root||document).querySelector(sel);
+const el = (tag, cls, text) => {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text !== undefined) n.textContent = text;
+  return n;
+};
+
+/* ================= UI-строки ================= */
+const UI = {
+  ru: {
+    htmlLang: 'ru',
+    title: 'ADHD Toolkit — навигатор навыков',
+    metaDesc: 'Интерактивный навигатор навыков при СДВГ: выбери проблему, получи конкретный навык с инструкцией «Что делать» и объяснением «Почему работает». Таблица эмоций и когнитивные ловушки.',
+    subtitle: 'Навыки для людей с ADHD. И для всех, кто иногда отвлекается, забывает или чувствует себя перегруженным.',
+    buddyBubble: 'Что это\nза сайт?',
+    altBuddy: 'Соболь Бадди — нажми, чтобы узнать, что это за сайт',
+    preface1: 'ADHD — это спектр. Не переключатель «есть/нет», а шкала. Какие-то черты из этого спектра есть у каждого: кто-то хуже чувствует время, кто-то не может начать скучную задачу, кто-то взрывается от критики. У одних это пара знакомых моментов, у других — полный набор на максимальной громкости. Разница — в интенсивности и в том, насколько это мешает жить.',
+    preface2: 'Когнитивные ловушки — отдельная история. Катастрофизация, чтение мыслей, чёрно-белое мышление — это не ADHD и не диагноз. Это стандартное оборудование человеческого мозга, одинаковое для всех. Навыки и инструменты на этом сайте работают вне зависимости от диагноза. Бери то, что подходит.',
+    tabNavigator: '🧭 Навигатор', tabEmotions: '🎭 Эмоции', tabTraps: '🕳️ Ловушки',
+    zonesH2: 'Что сейчас не так?', emotionsH2: 'Таблица эмоций', trapsH2: 'Когнитивные ловушки',
+    backZones: '← К зонам', backCats: '← К проблемам',
+    tagSelfTalk: 'Что ты себе говоришь', tagSkills: 'Навыки',
+    tagWhatToDo: 'Что делать', tagWhy: 'Почему работает',
+    emoWeak: 'Слабая интенсивность', emoMid: 'Средняя интенсивность', emoStrong: 'Высокая интенсивность',
+    emoBody: 'Сигнал тела', emoMessage: 'Что эмоция говорит тебе',
+    trapWhat: 'Что это', trapExample: 'Пример (как звучит в голове)', trapDo: 'Что делать',
+    trapAdhd: 'Почему твой мозг так делает?',
+    altFox1: 'Лисёнок сидит на столе', altFox2: 'Лисёнок играет с верёвочками',
+    altLogo: 'Соболь-босс с бабочкой — логотип ADHD Toolkit'
+  },
+  en: {
+    htmlLang: 'en',
+    title: 'ADHD Toolkit — Skills Navigator',
+    metaDesc: 'An interactive ADHD skills navigator: pick a problem, get a concrete skill with a "What to do" guide and a "Why it works" explanation. Emotion table and cognitive traps.',
+    subtitle: 'Skills for people with ADHD. And for everyone who sometimes gets distracted, forgets things, or feels overwhelmed.',
+    buddyBubble: 'What is\nthis site?',
+    altBuddy: 'Buddy the sable — click to learn what this site is',
+    preface1: "ADHD is a spectrum, not a switch. Everyone sits somewhere on it. Maybe you lose track of time. Maybe you can't start the boring thing. Maybe criticism hits you like a truck. For some people it's a couple of familiar quirks. For others it's the full package turned up to eleven. The difference is how loud it gets and how much it gets in the way.",
+    preface2: "Cognitive traps are a separate thing entirely. Catastrophizing, mind reading, black-and-white thinking — that's not ADHD. That's standard-issue human brain. We all have the same bugs in our operating system. The tools on this site work whether you have a diagnosis or not. Take what fits. Leave what doesn't.",
+    tabNavigator: '🧭 Navigator', tabEmotions: '🎭 Emotions', tabTraps: '🕳️ Traps',
+    zonesH2: "What's wrong right now?", emotionsH2: 'Emotion Table', trapsH2: 'Cognitive Traps',
+    backZones: '← To zones', backCats: '← To problems',
+    tagSelfTalk: 'What you tell yourself', tagSkills: 'Skills',
+    tagWhatToDo: 'What to do', tagWhy: 'Why it works',
+    emoWeak: 'Low intensity', emoMid: 'Medium intensity', emoStrong: 'High intensity',
+    emoBody: 'Body signal', emoMessage: 'What the emotion tells you',
+    trapWhat: 'What it is', trapExample: 'Example (voice in your head)', trapDo: 'What to do',
+    trapAdhd: 'Why your brain does this',
+    altFox1: 'A sable sitting on a table', altFox2: 'A sable playing with ropes',
+    altLogo: 'Boss sable with a bow tie — ADHD Toolkit logo'
+  }
+};
+
+/* ================= Состояние ================= */
+let LANG = localStorage.getItem('adhd-lang') || 'ru';
+let DATA = I18N_DATA[LANG];
+let DESC = I18N_DESC[LANG];
+let T = UI[LANG];
+let state = { zone: null, cat: null, skill: null };
+
+const sobolImg = (src, alt) => {
+  const img = document.createElement('img');
+  img.className = 'c-img';
+  img.src = src;
+  img.alt = alt;
+  img.loading = 'lazy';
+  makeZoomable(img);
+  return img;
+};
+
+/* ================= Табы ================= */
+document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    $('#tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ================= Статические тексты ================= */
+function applyStaticTexts() {
+  document.documentElement.lang = T.htmlLang;
+  document.title = T.title;
+  $('meta[name="description"]').setAttribute('content', T.metaDesc);
+  $('#subtitle').textContent = T.subtitle;
+  $('#buddy').alt = T.altBuddy;
+  $('#preface-1').textContent = T.preface1;
+  $('#preface-2').textContent = T.preface2;
+  $('#tabbtn-navigator').textContent = T.tabNavigator;
+  $('#tabbtn-emotions').textContent = T.tabEmotions;
+  $('#tabbtn-traps').textContent = T.tabTraps;
+  $('#back-to-zones').textContent = T.backZones;
+  $('#tab-navigator h2').textContent = T.zonesH2;
+  $('#tab-emotions h2').textContent = T.emotionsH2;
+  $('#tab-traps h2').textContent = T.trapsH2;
+  $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
+}
+
+/* ================= Навигатор: Уровень 1 — зоны ================= */
+function renderZones() {
+  const zonesGrid = $('#zones-grid');
+  zonesGrid.innerHTML = '';
+  DATA.zones.forEach((zone, zi) => {
+    const card = el('div', 'card');
+    card.appendChild(sobolImg(ZONE_IMG[zone.id], zone.name));
+    card.appendChild(el('div', 'c-title', zone.name));
+    card.appendChild(el('div', 'c-sub', zone.categories.map(c => c.name).join(' / ')));
+    card.addEventListener('click', () => openZone(zi));
+    zonesGrid.appendChild(card);
+  });
+}
+
+/* ================= Навигатор: Уровень 2 — категории ================= */
+function openZone(zi) {
+  state.zone = zi; state.cat = null; state.skill = null;
+  renderZoneLevel();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function renderZoneLevel() {
+  const zone = DATA.zones[state.zone];
+  $('#nav-zones').style.display = 'none';
+  $('#nav-categories').style.display = 'block';
+  $('#zone-title').textContent = zone.name;
+  $('#skill-panel').innerHTML = '';
+
+  const grid = $('#cats-grid');
+  grid.innerHTML = '';
+  zone.categories.forEach((cat, ci) => {
+    const card = el('div', 'card');
+    if (state.cat === ci) card.classList.add('selected');
+    card.appendChild(sobolImg(CAT_IMG[cat.id], cat.name));
+    card.appendChild(el('div', 'c-title', cat.name));
+    const intro = DESC[cat.id];
+    const cardSelfTalk = intro ? intro.quote.replace(/^[«"]|[»"]$/g, '')
+      : [...new Set(cat.problems.flatMap(p => p.selftalk))].join(' / ');
+    card.appendChild(el('div', 'c-selftalk', cardSelfTalk));
+    card.addEventListener('click', () => {
+      state.cat = ci; state.skill = null;
+      grid.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      renderSkillPanel();
+    });
+    grid.appendChild(card);
+  });
+}
+
+$('#back-to-zones').addEventListener('click', backToZones);
+function backToZones() {
+  state.zone = null; state.cat = null; state.skill = null;
+  $('#nav-categories').style.display = 'none';
+  $('#nav-zones').style.display = 'block';
+}
+
+/* ================= Навигатор: Уровень 3 — навыки ================= */
+function renderSkillPanel() {
+  const zone = DATA.zones[state.zone];
+  const cat = zone.categories[state.cat];
+  const panel = $('#skill-panel');
+  panel.innerHTML = '';
+
+  const box = el('div', 'panel');
+
+  // Развёрнутое описание (или короткий self-talk, если описания нет)
+  const intro = DESC[cat.id];
+  if (intro) {
+    const ib = el('div', 'intro-box');
+    ib.appendChild(el('div', 'i-quote', intro.quote));
+    ib.appendChild(el('div', 'i-text', intro.text));
+    box.appendChild(ib);
+  } else {
+    const stBox = el('div', 'selftalk-box');
+    stBox.appendChild(el('span', 'tag tag-red', T.tagSelfTalk));
+    const selftalkAll = [...new Set(cat.problems.flatMap(p => p.selftalk))];
+    stBox.appendChild(el('div', 'st-list', selftalkAll.join(' · ')));
+    box.appendChild(stBox);
+  }
+
+  // Блок «Навыки» — чипсы
+  box.appendChild(el('span', 'tag tag-purple', T.tagSkills));
+  const chips = el('div', 'chips');
+  const detailHost = el('div');
+
+  let flatIndex = 0;
+  cat.problems.forEach(prob => {
+    prob.skills.forEach(sk => {
+      const idx = flatIndex++;
+      const chip = el('button', 'chip', sk.skill);
+      if (state.skill === idx) chip.classList.add('active');
+      chip.addEventListener('click', () => {
+        state.skill = idx;
+        chips.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        renderSkillDetail(detailHost, prob, sk);
+      });
+      chips.appendChild(chip);
+    });
+  });
+  box.appendChild(chips);
+  box.appendChild(detailHost);
+
+  // Восстановление открытого навыка (при смене языка)
+  if (state.skill !== null) {
+    let i = 0, found = null;
+    cat.problems.forEach(prob => prob.skills.forEach(sk => {
+      if (i++ === state.skill) found = {prob, sk};
+    }));
+    if (found) renderSkillDetail(detailHost, found.prob, found.sk);
+  }
+
+  // Навигация
+  const nav = el('div', 'panel-nav');
+  const b1 = el('button', 'back-btn', T.backCats);
+  b1.addEventListener('click', () => {
+    state.cat = null; state.skill = null;
+    panel.innerHTML = '';
+    $('#cats-grid').querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+    $('#cats-grid').scrollIntoView({behavior: 'smooth', block: 'start'});
+  });
+  const b2 = el('button', 'back-btn', T.backZones);
+  b2.addEventListener('click', () => {
+    backToZones();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+  nav.appendChild(b1); nav.appendChild(b2);
+  box.appendChild(nav);
+
+  panel.appendChild(box);
+  box.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+
+function renderSkillDetail(host, prob, sk) {
+  host.innerHTML = '';
+  const d = el('div', 'detail-box');
+  d.appendChild(el('div', 'd-problem', prob.name));
+
+  const cols = el('div', 'detail-cols');
+
+  const c1 = el('div', 'detail-col');
+  c1.appendChild(el('span', 'tag tag-blue', T.tagWhatToDo));
+  c1.appendChild(el('p', null, sk.todo));
+
+  const c2 = el('div', 'detail-col');
+  c2.appendChild(el('span', 'tag tag-purple', T.tagWhy));
+  c2.appendChild(el('p', null, sk.why));
+
+  cols.appendChild(c1); cols.appendChild(c2);
+  d.appendChild(cols);
+  host.appendChild(d);
+  d.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+
+/* ================= Аккордеон (общий) ================= */
+
+/* ================= Лайтбокс для соболей ================= */
+const lightbox = $('#lightbox');
+const lightboxImg = $('#lightbox-img');
+
+function openLightbox(src, alt) {
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || '';
+  lightbox.classList.add('open');
+  requestAnimationFrame(() => requestAnimationFrame(() => lightbox.classList.add('visible')));
+}
+function closeLightbox() {
+  lightbox.classList.remove('visible');
+  setTimeout(() => lightbox.classList.remove('open'), 230);
+}
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+$('#lightbox-close').addEventListener('click', closeLightbox);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+});
+function makeZoomable(img) {
+  img.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openLightbox(img.src, img.alt);
+  });
+}
+
+function buildAccordion(host, items, renderBody, imgs) {
+  host.innerHTML = '';
+  items.forEach((item, idx) => {
+    const wrap = el('div', 'acc-item');
+    const head = el('button', 'acc-head');
+    let img = null;
+    if (imgs && imgs[idx]) {
+      img = sobolImg(imgs[idx], item.name);
+      img.classList.add('acc-mascot');
+      head.appendChild(img);
+    }
+    head.appendChild(el('span', 'a-title', item.name));
+    head.appendChild(el('span', 'a-arrow', '▼'));
+    const body = el('div', 'acc-body');
+    renderBody(body, item);
+    head.addEventListener('click', () => {
+      const wasOpen = wrap.classList.contains('open');
+      host.querySelectorAll('.acc-item').forEach(i => {
+        if (i.classList.contains('open')) {
+          i.classList.remove('open');
+          collapseMascot(i);
+        }
+      });
+      if (!wasOpen) {
+        wrap.classList.add('open');
+        expandMascot(wrap);
+      }
+    });
+    wrap.appendChild(head); wrap.appendChild(body);
+    host.appendChild(wrap);
+  });
+}
+
+/* ---- mascot move animation (FLIP) ---- */
+function expandMascot(wrap) {
+  const img = wrap.querySelector('.acc-mascot');
+  const body = wrap.querySelector('.acc-body');
+  if (!img || !body) return;
+  const first = img.getBoundingClientRect();
+  body.insertBefore(img, body.firstChild);
+  const last = img.getBoundingClientRect();
+  const dx = first.left - last.left;
+  const dy = first.top - last.top;
+  const scale = first.height / Math.max(last.height, 1);
+  img.style.transition = 'none';
+  img.style.transformOrigin = 'top right';
+  img.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      img.style.transition = 'transform 0.26s ease-in-out';
+      img.style.transform = '';
+    });
+  });
+}
+function collapseMascot(wrap) {
+  const img = wrap.querySelector('.acc-mascot');
+  const head = wrap.querySelector('.acc-head');
+  if (!img || !head) return;
+  const first = img.getBoundingClientRect();
+  head.insertBefore(img, head.firstChild);
+  const last = img.getBoundingClientRect();
+  const dx = first.left - last.left;
+  const dy = first.top - last.top;
+  const scale = first.height / Math.max(last.height, 1);
+  img.style.transition = 'none';
+  img.style.transformOrigin = 'top left';
+  img.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      img.style.transition = 'transform 0.26s ease-in-out';
+      img.style.transform = '';
+    });
+  });
+}
+
+function accSec(body, tagCls, tagText, content) {
+  const sec = el('div', 'acc-sec');
+  sec.appendChild(el('span', 'tag ' + tagCls, tagText));
+  sec.appendChild(el('p', null, content));
+  body.appendChild(sec);
+}
+
+/* ================= Эмоции / Ловушки ================= */
+function renderEmotions() {
+  buildAccordion($('#emotions-acc'), DATA.emotions, (body, e) => {
+    accSec(body, 'tag-green',  T.emoWeak,    e.weak);
+    accSec(body, 'tag-yellow', T.emoMid,     e.mid);
+    accSec(body, 'tag-red',    T.emoStrong,  e.strong);
+    accSec(body, 'tag-purple', T.emoBody,    e.body);
+    accSec(body, 'tag-blue',   T.emoMessage, e.message);
+  }, EMO_IMG[LANG]);
+}
+function renderTraps() {
+  buildAccordion($('#traps-acc'), DATA.traps, (body, t) => {
+    accSec(body, 'tag-purple', T.trapWhat,    t.what);
+    accSec(body, 'tag-red',    T.trapExample, t.example);
+    accSec(body, 'tag-green',  T.trapDo,      t.todo);
+    if (t.adhd) accSec(body, 'tag-yellow', T.trapAdhd, t.adhd);
+  }, TRAP_IMG);
+}
+
+/* ================= Полный рендер ================= */
+function renderAll() {
+  applyStaticTexts();
+  renderZones();
+  if (state.zone !== null) renderZoneLevel();
+  if (state.cat !== null) renderSkillPanel();
+  renderEmotions();
+  renderTraps();
+}
+
+/* ================= Бадди: раскрытие вступления ================= */
+function togglePreface() {
+  $('#preface-panel').classList.toggle('open');
+}
+$('#buddy').addEventListener('click', togglePreface);
+
+/* ================= Переключатель языка ================= */
+$('#lang-toggle').addEventListener('click', () => {
+  LANG = LANG === 'ru' ? 'en' : 'ru';
+  localStorage.setItem('adhd-lang', LANG);
+  DATA = I18N_DATA[LANG];
+  DESC = I18N_DESC[LANG];
+  T = UI[LANG];
+  renderAll();
+});
+
+renderAll();
+
+</script>
+</body>
+</html>
