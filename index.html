@@ -306,6 +306,12 @@ const EMO_IMG = {
   en: ["cards/emo01_zlo.png","cards/emo02_strah.png","cards/emo03_grust.png","cards/emo04_styd.png",
        "cards/emo05_radost.png","cards/emo06_otvrash.png","cards/emo07_udivlenie.png","cards/emo08_zavist.png"]
 };
+const TRAP_IMG = ["cards/trap01_katastrofa.png","cards/trap02_mindread.png","cards/trap03_chernobeloe.png",
+"cards/trap04_obescenivanie.png","cards/trap05_emorazum.png","cards/trap06_dolzhen.png","cards/trap07_yarlyk.png",
+"cards/trap08_personaliz.png","cards/trap09_sverhobob.png","cards/trap10_mentalfiltr.png","cards/trap11_predskazanie.png",
+"cards/trap12_preumen.png","cards/trap13_tunnel.png","cards/trap14_magic.png","cards/trap15_spravedlivost.png",
+"cards/trap16_sravnenie.png","cards/trap17_minimizaciya.png","cards/trap18_telepatia2.png","cards/trap19_dilemma.png",
+"cards/trap20_proekciya.png"];
 </script>
 <script>
 
@@ -608,7 +614,7 @@ function renderTraps() {
     accSec(body, 'tag-red',    T.trapExample, t.example);
     accSec(body, 'tag-green',  T.trapDo,      t.todo);
     if (t.adhd) accSec(body, 'tag-yellow', T.trapAdhd, t.adhd);
-  });
+  }, TRAP_IMG);
 }
 
 /* ================= Полный рендер ================= */
