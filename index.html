@@ -220,6 +220,11 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
 .acc-head .a-arrow{color:var(--hint);font-size:1rem;transition:transform 0.2s ease;flex-shrink:0}
 .acc-item.open .a-arrow{transform:rotate(180deg);color:var(--red)}
 .acc-body{display:none;padding:0 18px 18px;animation:fadeIn 0.3s ease}
+.acc-body{position:relative}
+.acc-body .acc-mascot{
+  float:right; height:110px; width:auto; margin:2px 0 8px 14px;
+}
+
 .acc-item.open .acc-body{display:block}
 .acc-sec{margin-top:14px}
 .acc-sec p{font-size:0.92rem}
@@ -232,6 +237,7 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
   .tab-btn{flex:1 1 auto;padding:10px 10px;font-size:0.82rem}
   .card .c-title{font-size:1rem}
   #lang-toggle{flex:0 0 auto;padding:6px 12px}
+  .acc-body .acc-mascot{height:96px}
 }
 </style>
 </head>
@@ -577,20 +583,76 @@ function buildAccordion(host, items, renderBody, imgs) {
   items.forEach((item, idx) => {
     const wrap = el('div', 'acc-item');
     const head = el('button', 'acc-head');
-    if (imgs && imgs[idx]) head.appendChild(sobolImg(imgs[idx], item.name));
+    let img = null;
+    if (imgs && imgs[idx]) {
+      img = sobolImg(imgs[idx], item.name);
+      img.classList.add('acc-mascot');
+      head.appendChild(img);
+    }
     head.appendChild(el('span', 'a-title', item.name));
     head.appendChild(el('span', 'a-arrow', '▼'));
     const body = el('div', 'acc-body');
     renderBody(body, item);
     head.addEventListener('click', () => {
       const wasOpen = wrap.classList.contains('open');
-      host.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) wrap.classList.add('open');
+      host.querySelectorAll('.acc-item').forEach(i => {
+        if (i.classList.contains('open')) {
+          i.classList.remove('open');
+          collapseMascot(i);
+        }
+      });
+      if (!wasOpen) {
+        wrap.classList.add('open');
+        expandMascot(wrap);
+      }
     });
     wrap.appendChild(head); wrap.appendChild(body);
     host.appendChild(wrap);
   });
 }
+
+/* ---- mascot move animation (FLIP) ---- */
+function expandMascot(wrap) {
+  const img = wrap.querySelector('.acc-mascot');
+  const body = wrap.querySelector('.acc-body');
+  if (!img || !body) return;
+  const first = img.getBoundingClientRect();
+  body.insertBefore(img, body.firstChild);
+  const last = img.getBoundingClientRect();
+  const dx = first.left - last.left;
+  const dy = first.top - last.top;
+  const scale = first.height / Math.max(last.height, 1);
+  img.style.transition = 'none';
+  img.style.transformOrigin = 'top right';
+  img.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      img.style.transition = 'transform 0.26s ease-in-out';
+      img.style.transform = '';
+    });
+  });
+}
+function collapseMascot(wrap) {
+  const img = wrap.querySelector('.acc-mascot');
+  const head = wrap.querySelector('.acc-head');
+  if (!img || !head) return;
+  const first = img.getBoundingClientRect();
+  head.insertBefore(img, head.firstChild);
+  const last = img.getBoundingClientRect();
+  const dx = first.left - last.left;
+  const dy = first.top - last.top;
+  const scale = first.height / Math.max(last.height, 1);
+  img.style.transition = 'none';
+  img.style.transformOrigin = 'top left';
+  img.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      img.style.transition = 'transform 0.26s ease-in-out';
+      img.style.transform = '';
+    });
+  });
+}
+
 function accSec(body, tagCls, tagText, content) {
   const sec = el('div', 'acc-sec');
   sec.appendChild(el('span', 'tag ' + tagCls, tagText));
