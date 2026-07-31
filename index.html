@@ -26,16 +26,21 @@ body{
 .wrap{max-width:1100px;margin:0 auto;padding:0 16px 64px}
 
 /* ===== Header ===== */
-header{padding:20px 0 10px;text-align:center}
+header{padding:16px 0 6px;position:relative}
 header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
-#subtitle{color:var(--hint);font-size:0.95rem;line-height:1.5;margin:6px auto 0;max-width:640px}
+#subtitle{color:var(--hint);font-size:0.95rem;line-height:1.5;margin:6px 0 0}
 
 @media(max-width:520px){}
-.logo-row{display:flex;align-items:center;gap:12px;text-align:left}
-.logo-row h1{margin:0}
-.logo-row .lang-btn{margin-left:auto}
-.logo-row .logo-img{height:52px;width:auto}
-@media(max-width:520px){.logo-row img{height:44px}}
+.title-row{display:flex;align-items:center;gap:12px}
+.title-row h1{margin:0}
+.logo-img{height:44px;width:auto}
+@media(max-width:520px){
+  .hero{flex-direction:column;align-items:center;gap:8px;text-align:center}
+  .hero-text h1{font-size:1.4rem}
+  .title-row{justify-content:center}
+  #subtitle{margin:6px auto 0;max-width:520px}
+  .buddy-img{height:100px}
+}
 .card .c-img{
   display:block; height:110px; width:auto; max-width:100%;
   object-fit:contain; margin:0 auto 10px;
@@ -46,30 +51,58 @@ header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
 
 
 /* ===== Buddy + collapsible intro ===== */
-.buddy-area{margin-top:12px}
+.hero{display:flex;align-items:center;gap:20px;text-align:left}
+.buddy-col{display:flex;flex-direction:column;align-items:center;flex:0 0 auto}
+.hero-text{min-width:0}
+.hero-text h1{font-size:1.9rem}
+.lang-btn{position:absolute;top:16px;right:0}
+
+/* thought bubble */
 .buddy-bubble{
-  display:inline-block; background:var(--card); border:1px solid var(--border);
-  border-radius:14px; padding:8px 16px; font-size:0.9rem; font-weight:700;
-  color:var(--blue); position:relative; cursor:pointer; user-select:none;
-  transition:border-color 0.2s ease;
+  position:relative; display:block; text-align:center;
+  background:var(--card);
+  border-radius:46% 54% 52% 48% / 58% 50% 50% 42%;
+  padding:14px 20px; font-size:0.82rem; font-weight:700; line-height:1.25;
+  color:var(--blue); cursor:pointer; user-select:none;
+  box-shadow:0 3px 10px rgba(15,52,96,.14);
+  transition:transform 0.25s ease, box-shadow 0.25s ease;
 }
-.buddy-bubble:hover{border-color:var(--blue)}
-.buddy-bubble::after{
-  content:''; position:absolute; left:50%; bottom:-7px; margin-left:-6px;
-  border:6px solid transparent; border-top-color:var(--border); border-bottom:none;
+.buddy-bubble::before, .buddy-bubble::after{
+  content:''; position:absolute; background:var(--card); border-radius:50%;
 }
+.buddy-bubble::before{width:26px;height:22px;top:-8px;left:18%}
+.buddy-bubble::after{width:20px;height:17px;bottom:-6px;right:22%}
+.buddy-bubble:hover{
+  transform:scale(1.03) rotate(-1.5deg);
+  box-shadow:0 7px 18px rgba(15,52,96,.2);
+  animation:sway 0.6s ease;
+}
+@keyframes sway{
+  0%{transform:scale(1.03) rotate(-1.5deg)}
+  50%{transform:scale(1.03) rotate(1.5deg)}
+  100%{transform:scale(1.03) rotate(-1.5deg)}
+}
+.bubble-text{position:relative;z-index:1;display:block;white-space:pre-line}
+.bubble-dots{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin-top:2px;margin-left:14px}
+.bubble-dots i{display:block;background:var(--card);border-radius:50%;box-shadow:0 1px 4px rgba(15,52,96,.12)}
+.bubble-dots i:nth-child(1){width:9px;height:9px}
+.bubble-dots i:nth-child(2){width:6px;height:6px;margin-left:5px}
+.bubble-dots i:nth-child(3){width:4px;height:4px;margin-left:9px}
+
 .buddy-img{
-  display:block; height:100px; width:auto; margin:10px auto 0;
+  display:block; height:120px; width:auto; margin-top:2px;
   cursor:pointer; transition:transform 0.2s ease;
 }
-.buddy-img:hover{transform:scale(1.06)}
+.buddy-img:hover{transform:scale(1.05)}
+
+/* collapsible intro */
 .preface-panel{
   display:grid; grid-template-rows:0fr;
   transition:grid-template-rows 0.35s ease;
-  max-width:640px; margin:0 auto; text-align:left;
+  margin:0 auto; text-align:left;
 }
 .preface-panel.open{grid-template-rows:1fr}
-.preface-inner{overflow:hidden; min-height:0}
+.preface-inner{overflow:hidden; min-height:0; height:100%}
 .preface-inner > p{
   background:var(--card); border:1px solid var(--border);
   font-size:0.9rem; line-height:1.65; color:var(--text); margin:0;
@@ -81,7 +114,7 @@ header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
 .tabbar{
   display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
   position:sticky;top:0;z-index:50;
-  background:var(--bg);padding:8px 0;margin:0 0 18px;
+  background:var(--bg);padding:6px 0;margin:0 0 12px;
   box-shadow:0 1px 0 var(--border);
 }
 .tab-btn{
@@ -204,20 +237,24 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
 <body>
 <div class="wrap">
   <header>
-    <div class="logo-row">
-      <img src="sobol-logo.png" class="logo-img" alt="Соболь-босс с бабочкой — логотип ADHD Toolkit">
-      <h1>ADHD Toolkit</h1>
-      <button class="lang-btn" id="lang-toggle" title="Switch language">EN</button>
-    </div>
-    <p id="subtitle"></p>
-    <div class="buddy-area">
-      <div class="buddy-bubble" id="buddy-bubble"></div>
-      <img src="sobol-logo.png" id="buddy" class="buddy-img" alt="">
-      <div class="preface-panel" id="preface-panel">
-        <div class="preface-inner">
-          <p id="preface-1"></p>
-          <p id="preface-2"></p>
+    <button class="lang-btn" id="lang-toggle" title="Switch language">EN</button>
+    <div class="hero">
+      <div class="buddy-col">
+        <div class="buddy-bubble" id="buddy-bubble"><span class="bubble-text" id="bubble-text"></span><span class="bubble-dots"><i></i><i></i><i></i></span></div>
+        <img src="sobol-logo.png" id="buddy" class="buddy-img" alt="">
+      </div>
+      <div class="hero-text">
+        <div class="title-row">
+          <img src="sobol-logo.png" class="logo-img" alt="Соболь-босс с бабочкой — логотип ADHD Toolkit">
+          <h1>ADHD Toolkit</h1>
         </div>
+        <p id="subtitle"></p>
+      </div>
+    </div>
+    <div class="preface-panel" id="preface-panel">
+      <div class="preface-inner">
+        <p id="preface-1"></p>
+        <p id="preface-2"></p>
       </div>
     </div>
   </header>
@@ -281,7 +318,7 @@ const UI = {
     title: 'ADHD Toolkit — навигатор навыков',
     metaDesc: 'Интерактивный навигатор навыков при СДВГ: выбери проблему, получи конкретный навык с инструкцией «Что делать» и объяснением «Почему работает». Таблица эмоций и когнитивные ловушки.',
     subtitle: 'Навыки для людей с ADHD. И для всех, кто иногда отвлекается, забывает или чувствует себя перегруженным.',
-    buddyBubble: 'Что это за сайт?',
+    buddyBubble: 'Что это\nза сайт?',
     altBuddy: 'Соболь Бадди — нажми, чтобы узнать, что это за сайт',
     preface1: 'ADHD — это спектр. Не переключатель «есть/нет», а шкала. Какие-то черты из этого спектра есть у каждого: кто-то хуже чувствует время, кто-то не может начать скучную задачу, кто-то взрывается от критики. У одних это пара знакомых моментов, у других — полный набор на максимальной громкости. Разница — в интенсивности и в том, насколько это мешает жить.',
     preface2: 'Когнитивные ловушки — отдельная история. Катастрофизация, чтение мыслей, чёрно-белое мышление — это не ADHD и не диагноз. Это стандартное оборудование человеческого мозга, одинаковое для всех. Навыки и инструменты на этом сайте работают вне зависимости от диагноза. Бери то, что подходит.',
@@ -302,7 +339,7 @@ const UI = {
     title: 'ADHD Toolkit — Skills Navigator',
     metaDesc: 'An interactive ADHD skills navigator: pick a problem, get a concrete skill with a "What to do" guide and a "Why it works" explanation. Emotion table and cognitive traps.',
     subtitle: 'Skills for people with ADHD. And for everyone who sometimes gets distracted, forgets things, or feels overwhelmed.',
-    buddyBubble: 'What is this site?',
+    buddyBubble: 'What is\nthis site?',
     altBuddy: 'Buddy the sable — click to learn what this site is',
     preface1: "ADHD is a spectrum, not a switch. Everyone sits somewhere on it. Maybe you lose track of time. Maybe you can't start the boring thing. Maybe criticism hits you like a truck. For some people it's a couple of familiar quirks. For others it's the full package turned up to eleven. The difference is how loud it gets and how much it gets in the way.",
     preface2: "Cognitive traps are a separate thing entirely. Catastrophizing, mind reading, black-and-white thinking — that's not ADHD. That's standard-issue human brain. We all have the same bugs in our operating system. The tools on this site work whether you have a diagnosis or not. Take what fits. Leave what doesn't.",
@@ -352,7 +389,7 @@ function applyStaticTexts() {
   document.title = T.title;
   $('meta[name="description"]').setAttribute('content', T.metaDesc);
   $('#subtitle').textContent = T.subtitle;
-  $('#buddy-bubble').textContent = T.buddyBubble;
+  $('#bubble-text').textContent = T.buddyBubble;
   $('#buddy').alt = T.altBuddy;
   $('#preface-1').textContent = T.preface1;
   $('#preface-2').textContent = T.preface2;
@@ -363,7 +400,7 @@ function applyStaticTexts() {
   $('#tab-navigator h2').textContent = T.zonesH2;
   $('#tab-emotions h2').textContent = T.emotionsH2;
   $('#tab-traps h2').textContent = T.trapsH2;
-  $('.logo-row img').alt = T.altLogo;
+  $('.logo-img').alt = T.altLogo;
   $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
 }
 
