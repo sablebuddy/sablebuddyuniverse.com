@@ -26,13 +26,15 @@ body{
 .wrap{max-width:1100px;margin:0 auto;padding:0 16px 64px}
 
 /* ===== Header ===== */
-header{padding:28px 0 18px;text-align:center}
+header{padding:20px 0 10px;text-align:center}
 header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
-header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
+#subtitle{color:var(--hint);font-size:0.95rem;line-height:1.5;margin:6px auto 0;max-width:640px}
 
 @media(max-width:520px){}
-.logo-row{display:flex;align-items:center;justify-content:center;gap:12px}
-.logo-row img{height:56px;width:auto}
+.logo-row{display:flex;align-items:center;gap:12px;text-align:left}
+.logo-row h1{margin:0}
+.logo-row .lang-btn{margin-left:auto}
+.logo-row .logo-img{height:52px;width:auto}
 @media(max-width:520px){.logo-row img{height:44px}}
 .card .c-img{
   display:block; height:110px; width:auto; max-width:100%;
@@ -43,18 +45,43 @@ header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
 @media(max-width:520px){.card .c-img{height:96px}}
 
 
-.preface{
-  background:var(--card); border:1px solid var(--border); border-radius:14px;
-  padding:16px 18px; margin:0 0 6px; text-align:left;
+/* ===== Buddy + collapsible intro ===== */
+.buddy-area{margin-top:12px}
+.buddy-bubble{
+  display:inline-block; background:var(--card); border:1px solid var(--border);
+  border-radius:14px; padding:8px 16px; font-size:0.9rem; font-weight:700;
+  color:var(--blue); position:relative; cursor:pointer; user-select:none;
+  transition:border-color 0.2s ease;
 }
-.preface p{font-size:0.9rem; line-height:1.65; color:var(--text); margin:0}
-.preface p + p{margin-top:10px}
+.buddy-bubble:hover{border-color:var(--blue)}
+.buddy-bubble::after{
+  content:''; position:absolute; left:50%; bottom:-7px; margin-left:-6px;
+  border:6px solid transparent; border-top-color:var(--border); border-bottom:none;
+}
+.buddy-img{
+  display:block; height:100px; width:auto; margin:10px auto 0;
+  cursor:pointer; transition:transform 0.2s ease;
+}
+.buddy-img:hover{transform:scale(1.06)}
+.preface-panel{
+  display:grid; grid-template-rows:0fr;
+  transition:grid-template-rows 0.35s ease;
+  max-width:640px; margin:0 auto; text-align:left;
+}
+.preface-panel.open{grid-template-rows:1fr}
+.preface-inner{overflow:hidden; min-height:0}
+.preface-inner > p{
+  background:var(--card); border:1px solid var(--border);
+  font-size:0.9rem; line-height:1.65; color:var(--text); margin:0;
+}
+.preface-inner p:first-child{border-radius:14px 14px 0 0;border-bottom:none;padding:16px 18px 0;margin-top:10px}
+.preface-inner p:last-child{border-radius:0 0 14px 14px;padding:10px 18px 16px}
 
 /* ===== Tabs ===== */
 .tabbar{
   display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
   position:sticky;top:0;z-index:50;
-  background:var(--bg);padding:10px 0;margin:0 0 26px;
+  background:var(--bg);padding:8px 0;margin:0 0 18px;
   box-shadow:0 1px 0 var(--border);
 }
 .tab-btn{
@@ -67,7 +94,12 @@ header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
 .tab-btn.active{border-color:var(--red);background:var(--active-bg);color:var(--red)}
 .tab-pane{display:none}
 .tab-pane.active{display:block;animation:fadeIn 0.3s ease}
-.lang-btn{border-color:var(--blue);color:var(--blue);letter-spacing:.05em}
+.lang-btn{
+  border:2px solid var(--blue); background:var(--card); color:var(--blue);
+  font:inherit; font-weight:700; font-size:0.85rem; letter-spacing:.05em;
+  padding:6px 14px; border-radius:12px; cursor:pointer;
+  transition:all 0.2s ease;
+}
 .lang-btn:hover{background:var(--blue);color:#fff}
 
 /* ===== Grids & cards ===== */
@@ -165,31 +197,35 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
   header h1{font-size:1.4rem}
   .tab-btn{flex:1 1 auto;padding:10px 10px;font-size:0.82rem}
   .card .c-title{font-size:1rem}
-  #lang-toggle{flex:0 0 auto;padding:10px 14px}
+  #lang-toggle{flex:0 0 auto;padding:6px 12px}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    
     <div class="logo-row">
-      <img src="sobol-logo.png" alt="Соболь-босс с бабочкой — логотип ADHD Toolkit">
+      <img src="sobol-logo.png" class="logo-img" alt="Соболь-босс с бабочкой — логотип ADHD Toolkit">
       <h1>ADHD Toolkit</h1>
+      <button class="lang-btn" id="lang-toggle" title="Switch language">EN</button>
     </div>
-    <p>Навигатор навыков · Таблица эмоций · Когнитивные ловушки</p>
+    <p id="subtitle"></p>
+    <div class="buddy-area">
+      <div class="buddy-bubble" id="buddy-bubble"></div>
+      <img src="sobol-logo.png" id="buddy" class="buddy-img" alt="">
+      <div class="preface-panel" id="preface-panel">
+        <div class="preface-inner">
+          <p id="preface-1"></p>
+          <p id="preface-2"></p>
+        </div>
+      </div>
+    </div>
   </header>
-
-  <section class="preface" id="preface">
-    <p id="preface-1"></p>
-    <p id="preface-2"></p>
-  </section>
 
   <nav class="tabbar" role="tablist">
     <button class="tab-btn active" data-tab="navigator" role="tab" id="tabbtn-navigator">🧭 Навигатор</button>
     <button class="tab-btn" data-tab="emotions" role="tab" id="tabbtn-emotions">🎭 Эмоции</button>
     <button class="tab-btn" data-tab="traps" role="tab" id="tabbtn-traps">🕳️ Ловушки</button>
-    <button class="tab-btn lang-btn" id="lang-toggle" title="Switch language">EN</button>
   </nav>
 
   <!-- ============ TAB 1: Навигатор ============ -->
@@ -244,7 +280,9 @@ const UI = {
     htmlLang: 'ru',
     title: 'ADHD Toolkit — навигатор навыков',
     metaDesc: 'Интерактивный навигатор навыков при СДВГ: выбери проблему, получи конкретный навык с инструкцией «Что делать» и объяснением «Почему работает». Таблица эмоций и когнитивные ловушки.',
-    subtitle: 'Навигатор навыков · Таблица эмоций · Когнитивные ловушки',
+    subtitle: 'Навыки для людей с ADHD. И для всех, кто иногда отвлекается, забывает или чувствует себя перегруженным.',
+    buddyBubble: 'Что это за сайт?',
+    altBuddy: 'Соболь Бадди — нажми, чтобы узнать, что это за сайт',
     preface1: 'ADHD — это спектр. Не переключатель «есть/нет», а шкала. Какие-то черты из этого спектра есть у каждого: кто-то хуже чувствует время, кто-то не может начать скучную задачу, кто-то взрывается от критики. У одних это пара знакомых моментов, у других — полный набор на максимальной громкости. Разница — в интенсивности и в том, насколько это мешает жить.',
     preface2: 'Когнитивные ловушки — отдельная история. Катастрофизация, чтение мыслей, чёрно-белое мышление — это не ADHD и не диагноз. Это стандартное оборудование человеческого мозга, одинаковое для всех. Навыки и инструменты на этом сайте работают вне зависимости от диагноза. Бери то, что подходит.',
     tabNavigator: '🧭 Навигатор', tabEmotions: '🎭 Эмоции', tabTraps: '🕳️ Ловушки',
@@ -263,7 +301,9 @@ const UI = {
     htmlLang: 'en',
     title: 'ADHD Toolkit — Skills Navigator',
     metaDesc: 'An interactive ADHD skills navigator: pick a problem, get a concrete skill with a "What to do" guide and a "Why it works" explanation. Emotion table and cognitive traps.',
-    subtitle: 'Skills Navigator · Emotion Table · Cognitive Traps',
+    subtitle: 'Skills for people with ADHD. And for everyone who sometimes gets distracted, forgets things, or feels overwhelmed.',
+    buddyBubble: 'What is this site?',
+    altBuddy: 'Buddy the sable — click to learn what this site is',
     preface1: "ADHD is a spectrum, not a switch. Everyone sits somewhere on it. Maybe you lose track of time. Maybe you can't start the boring thing. Maybe criticism hits you like a truck. For some people it's a couple of familiar quirks. For others it's the full package turned up to eleven. The difference is how loud it gets and how much it gets in the way.",
     preface2: "Cognitive traps are a separate thing entirely. Catastrophizing, mind reading, black-and-white thinking — that's not ADHD. That's standard-issue human brain. We all have the same bugs in our operating system. The tools on this site work whether you have a diagnosis or not. Take what fits. Leave what doesn't.",
     tabNavigator: '🧭 Navigator', tabEmotions: '🎭 Emotions', tabTraps: '🕳️ Traps',
@@ -311,7 +351,9 @@ function applyStaticTexts() {
   document.documentElement.lang = T.htmlLang;
   document.title = T.title;
   $('meta[name="description"]').setAttribute('content', T.metaDesc);
-  $('header p').textContent = T.subtitle;
+  $('#subtitle').textContent = T.subtitle;
+  $('#buddy-bubble').textContent = T.buddyBubble;
+  $('#buddy').alt = T.altBuddy;
   $('#preface-1').textContent = T.preface1;
   $('#preface-2').textContent = T.preface2;
   $('#tabbtn-navigator').textContent = T.tabNavigator;
@@ -533,6 +575,13 @@ function renderAll() {
   renderEmotions();
   renderTraps();
 }
+
+/* ================= Бадди: раскрытие вступления ================= */
+function togglePreface() {
+  $('#preface-panel').classList.toggle('open');
+}
+$('#buddy').addEventListener('click', togglePreface);
+$('#buddy-bubble').addEventListener('click', togglePreface);
 
 /* ================= Переключатель языка ================= */
 $('#lang-toggle').addEventListener('click', () => {
