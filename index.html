@@ -29,13 +29,8 @@ body{
 header{padding:28px 0 18px;text-align:center}
 header h1{font-size:1.7rem;font-weight:700;color:var(--h)}
 header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
-.hero-photos{display:flex;justify-content:center;gap:14px;margin-bottom:16px}
-.hero-photos img{
-  width:120px;height:120px;object-fit:cover;border-radius:16px;
-  border:2px solid var(--border);transition:all 0.2s ease;
-}
-.hero-photos img:hover{transform:translateY(-3px);border-color:var(--blue);box-shadow:0 6px 18px rgba(15,52,96,.12)}
-@media(max-width:520px){.hero-photos img{width:96px;height:96px}}
+
+@media(max-width:520px){}
 .logo-row{display:flex;align-items:center;justify-content:center;gap:12px}
 .logo-row img{height:56px;width:auto}
 @media(max-width:520px){.logo-row img{height:44px}}
@@ -56,7 +51,12 @@ header p{color:var(--hint);font-size:0.9rem;margin-top:4px}
 .preface p + p{margin-top:10px}
 
 /* ===== Tabs ===== */
-.tabbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 26px}
+.tabbar{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  position:sticky;top:0;z-index:50;
+  background:var(--bg);padding:10px 0;margin:0 0 26px;
+  box-shadow:0 1px 0 var(--border);
+}
 .tab-btn{
   border:2px solid var(--border); background:var(--card); color:var(--hint);
   font:inherit; font-weight:700; font-size:0.9rem;
@@ -172,10 +172,7 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
 <body>
 <div class="wrap">
   <header>
-    <div class="hero-photos">
-      <img src="fox1.jpg" alt="Лисёнок сидит на столе">
-      <img src="fox2.jpg" alt="Лисёнок играет с верёвочками">
-    </div>
+    
     <div class="logo-row">
       <img src="sobol-logo.png" alt="Соболь-босс с бабочкой — логотип ADHD Toolkit">
       <h1>ADHD Toolkit</h1>
@@ -324,8 +321,6 @@ function applyStaticTexts() {
   $('#tab-navigator h2').textContent = T.zonesH2;
   $('#tab-emotions h2').textContent = T.emotionsH2;
   $('#tab-traps h2').textContent = T.trapsH2;
-  $('.hero-photos img:nth-child(1)').alt = T.altFox1;
-  $('.hero-photos img:nth-child(2)').alt = T.altFox2;
   $('.logo-row img').alt = T.altLogo;
   $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
 }
