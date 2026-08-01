@@ -196,4 +196,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/emotions/"/>
     <lastmod>2026-08-01</lastmod>
   </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/adhd/traps/specification/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/traps/specification/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/traps/specification/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/traps/specification/"/>
+    <lastmod>2026-08-01</lastmod>
+  </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/en/adhd/traps/specification/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/traps/specification/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/traps/specification/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/traps/specification/"/>
+    <lastmod>2026-08-01</lastmod>
+  </url>
 </urlset>

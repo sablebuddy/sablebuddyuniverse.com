@@ -550,6 +550,7 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
   <!-- ============ TAB 3: Ловушки ============ -->
   <section id="tab-traps" class="tab-pane">
     <h2>Когнитивные ловушки</h2>
+    <p style="margin:4px 0 14px;font-size:15px">🧠 <a id="traps-article-link" href="/adhd/traps/specification/"></a></p>
     <div class="acc" id="traps-acc"></div>
   </section>
 </div>
@@ -601,6 +602,7 @@ const UI = {
     preface2: 'Когнитивные ловушки - отдельная история. Катастрофизация, чтение мыслей, чёрно-белое мышление - это не ADHD и не диагноз. Это стандартное оборудование человеческого мозга, одинаковое для всех. Навыки и инструменты на этом сайте работают вне зависимости от диагноза. Бери то, что подходит.',
     tabNavigator: '🧭 Навигатор', tabEmotions: '🎭 Эмоции', tabTraps: '🕳️ Ловушки',
     zonesH2: 'Что сейчас не так?', emotionsH2: 'Таблица эмоций', trapsH2: 'Когнитивные ловушки',
+    trapsArticle: 'Откуда берутся ловушки - большая статья про спецификацию мозга',
     backZones: '← К зонам', backCats: '← К проблемам',
     tagSelfTalk: 'Что ты себе говоришь', tagSkills: 'Навыки',
     tagWhatToDo: 'Что делать', tagWhy: 'Почему работает',
@@ -622,6 +624,7 @@ const UI = {
     preface2: "Cognitive traps are a separate thing entirely. Catastrophizing, mind reading, black-and-white thinking - that's not ADHD. That's standard-issue human brain. We all have the same bugs in our operating system. The tools on this site work whether you have a diagnosis or not. Take what fits. Leave what doesn't.",
     tabNavigator: '🧭 Navigator', tabEmotions: '🎭 Emotions', tabTraps: '🕳️ Traps',
     zonesH2: "What's wrong right now?", emotionsH2: 'Emotion Table', trapsH2: 'Cognitive Traps',
+    trapsArticle: "Where cognitive traps come from - the big article about your brain's spec",
     backZones: '← To zones', backCats: '← To problems',
     tagSelfTalk: 'What you tell yourself', tagSkills: 'Skills',
     tagWhatToDo: 'What to do', tagWhy: 'Why it works',
@@ -677,6 +680,9 @@ function applyStaticTexts() {
   $('#tab-navigator h2').textContent = T.zonesH2;
   $('#tab-emotions h2').textContent = T.emotionsH2;
   $('#tab-traps h2').textContent = T.trapsH2;
+  const tal = $('#traps-article-link');
+  tal.textContent = T.trapsArticle;
+  tal.href = LANG === 'ru' ? '/adhd/traps/specification/' : '/en/adhd/traps/specification/';
   $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
 }
 
