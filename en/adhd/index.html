@@ -550,7 +550,8 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
   <!-- ============ TAB 3: Ловушки ============ -->
   <section id="tab-traps" class="tab-pane">
     <h2>Когнитивные ловушки</h2>
-    <p style="margin:4px 0 14px;font-size:15px">🧠 <a id="traps-article-link" href="/adhd/traps/specification/"></a></p>
+    <p style="margin:4px 0 6px;font-size:15px">🧠 <a id="traps-article-link" href="/adhd/traps/specification/"></a></p>
+    <p style="margin:0 0 14px;font-size:15px">🕳️ <a id="traps-cluster-link" href="/adhd/traps/unknown/"></a></p>
     <div class="acc" id="traps-acc"></div>
   </section>
 </div>
@@ -603,6 +604,7 @@ const UI = {
     tabNavigator: '🧭 Навигатор', tabEmotions: '🎭 Эмоции', tabTraps: '🕳️ Ловушки',
     zonesH2: 'Что сейчас не так?', emotionsH2: 'Таблица эмоций', trapsH2: 'Когнитивные ловушки',
     trapsArticle: 'Откуда берутся ловушки - большая статья про спецификацию мозга',
+    trapsCluster: 'Мозг не выносит пустоты - пять ловушек одного механизма, новый разбор',
     backZones: '← К зонам', backCats: '← К проблемам',
     tagSelfTalk: 'Что ты себе говоришь', tagSkills: 'Навыки',
     tagWhatToDo: 'Что делать', tagWhy: 'Почему работает',
@@ -625,6 +627,7 @@ const UI = {
     tabNavigator: '🧭 Navigator', tabEmotions: '🎭 Emotions', tabTraps: '🕳️ Traps',
     zonesH2: "What's wrong right now?", emotionsH2: 'Emotion Table', trapsH2: 'Cognitive Traps',
     trapsArticle: "Where cognitive traps come from - the big article about your brain's spec",
+    trapsCluster: "Your brain can't stand a blank space - five traps, one mechanism, the new breakdown",
     backZones: '← To zones', backCats: '← To problems',
     tagSelfTalk: 'What you tell yourself', tagSkills: 'Skills',
     tagWhatToDo: 'What to do', tagWhy: 'Why it works',
@@ -683,6 +686,9 @@ function applyStaticTexts() {
   const tal = $('#traps-article-link');
   tal.textContent = T.trapsArticle;
   tal.href = LANG === 'ru' ? '/adhd/traps/specification/' : '/en/adhd/traps/specification/';
+  const tcl = $('#traps-cluster-link');
+  tcl.textContent = T.trapsCluster;
+  tcl.href = LANG === 'ru' ? '/adhd/traps/unknown/' : '/en/adhd/traps/unknown/';
   $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
 }
 
