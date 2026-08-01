@@ -1,38 +1,67 @@
-# ADHD Toolkit — sablebuddyuniverse.com
+# SableBuddy Universe — sablebuddyuniverse.com
 
-> Бесплатный интерактивный навигатор навыков при СДВГ (ADHD) на двух языках — русском и английском. Пользователь выбирает конкретную проблему («не могу начать», «всё отвлекает», «боюсь отказа и критики») и получает конкретный навык: самодиагностику внутреннего диалога, объяснение почему мозг так работает, и пошаговую инструкцию «что делать». Сайт статический, не требует регистрации, не собирает данные.
+> Вселенная SableBuddy: бесплатные материалы и инструменты о мозге, эмоциях и продуктивности. Главный проект — ADHD Toolkit, интерактивный навигатор навыков при СДВГ на двух языках (русский и английский). Сайт статический, не требует регистрации, не собирает данные.
 >
-> Free bilingual (RU/EN) interactive ADHD skills navigator. Pick a specific struggle (task initiation, distractibility, RSD, time blindness) and get a concrete skill: self-talk diagnostics, an explanation of why the brain does this, and step-by-step "what to do" instructions. Static site, no sign-up, no tracking.
+> SableBuddy Universe: free materials and tools about the brain, emotions and productivity. The main project is ADHD Toolkit, an interactive bilingual (RU/EN) ADHD skills navigator. Static site, no sign-up, no tracking.
 
-## Что на сайте / What's inside
+## Структура сайта / Site structure
 
-### 1. Навигатор навыков / Skills Navigator (16 навыков / 16 skills)
-Четыре зоны проблем, в каждой — 4 ситуации с навыками:
-- Запуск и торможение (не могу начать, залипаю, "надо" блокирует, не могу остановиться)
-- Фокус и хаос (отвлекаюсь, всё сразу, не чувствую время, бардак вокруг)
-- Эмоции и энергия (эмоции скачут, RSD — страх отказа и критики, стыд, нет сил, мысли по кругу)
-- Общение (конфликты, "уже все понял, а он треплет", перебиваю и выпаливаю)
+- https://sablebuddyuniverse.com/ — главная (RU), зонтичная страница вселенной SableBuddy
+- https://sablebuddyuniverse.com/en/ — home page (EN)
+- https://sablebuddyuniverse.com/manifest/ — манифест «Почему этот сайт существует»: почему все навыки бесплатные, при чём тут система Toyota, WCM/TPM и принципы 5S
+- https://sablebuddyuniverse.com/en/manifest/ — manifesto "Why this site exists" (EN)
+- https://sablebuddyuniverse.com/about/ — об авторе: инженер качества, 20+ лет в WCM/TPM; «организую среду, а не лечу»
+- https://sablebuddyuniverse.com/en/about/ — about the author (EN)
+- https://sablebuddyuniverse.com/adhd/ — ADHD Toolkit: интерактивный навигатор (выбери проблему → получи навык), RU/EN внутри
+- https://sablebuddyuniverse.com/en/adhd/ — ADHD Toolkit navigator (EN entry)
 
-Four problem zones: Launch & Braking, Focus & Chaos, Emotions & Energy, Communication. Each skill includes: typical self-talk, an intro explaining the mechanism, and actionable techniques.
+## Статичные страницы контента / Static content pages
 
-### 2. Таблица эмоций / Emotions Table (8 эмоций / 8 emotions)
-Злость, страх, грусть, стыд, радость, отвращение, удивление, зависть — для каждой: как проявляется, что за ней стоит, что помогает. Anger, fear, sadness, shame, joy, disgust, surprise, envy — with manifestations, underlying needs, and coping steps.
+Навыки (по зонам) / Skills (by zone):
 
-### 3. Когнитивные ловушки / Cognitive Traps (20 ловушек / 20 traps)
-Каждая ловушка содержит: что это, пример (как звучит в голове), что делать, и почему мозг так делает (эволюционное/нейробиологическое объяснение). Each trap includes: what it is, an inner-voice example, what to do, and why your brain does this.
+- https://sablebuddyuniverse.com/adhd/skills/zapusk-i-tormozhenie/ — Запуск и торможение (14 навыков)
+- https://sablebuddyuniverse.com/adhd/skills/fokus-i-haos/ — Фокус и хаос (23 навыка)
+- https://sablebuddyuniverse.com/adhd/skills/emotsii-i-energiya/ — Эмоции и энергия (25 навыков)
+- https://sablebuddyuniverse.com/adhd/skills/obschenie/ — Общение (12 навыков)
+- https://sablebuddyuniverse.com/en/adhd/skills/activation-and-braking/ — Activation and braking (14 skills)
+- https://sablebuddyuniverse.com/en/adhd/skills/focus-and-chaos/ — Focus and chaos (23 skills)
+- https://sablebuddyuniverse.com/en/adhd/skills/emotions-and-energy/ — Emotions and energy (25 skills)
+- https://sablebuddyuniverse.com/en/adhd/skills/communication/ — Communication (12 skills)
 
-RU: Катастрофизация, Чтение мыслей, Черно-белое мышление, Обесценивание позитива, Эмоциональное обоснование, Долженствование, Навешивание ярлыков, Персонализация, Сверхобобщение, Ментальный фильтр, Предсказание будущего, Преуменьшение, Туннельное зрение, Магическое мышление, Справедливый мир, Сравнение, Минимизация усилий, Телепатия наоборот, Ложная дилемма, Проекция мотивов.
+Когнитивные ловушки / Cognitive traps (20 traps, 4 pages of 5):
 
-EN: Catastrophizing, Mind Reading, Black-and-White Thinking, Discounting the Positive, Emotional Reasoning, Should Statements, Labeling, Personalization, Overgeneralization, Mental Filter, Fortune Telling, Minimization, Tunnel Vision, Magical Thinking, Just World Fallacy, Comparison, Effort Minimization, Reverse Telepathy, False Dilemma, Motive Projection.
+- https://sablebuddyuniverse.com/adhd/traps/ — обзор всех 20 ловушек
+- https://sablebuddyuniverse.com/adhd/traps/traps-1-5/ — Катастрофизация, Чтение мыслей, Черно-белое мышление, Обесценивание позитива, Эмоциональное обоснование
+- https://sablebuddyuniverse.com/adhd/traps/traps-6-10/ — Долженствование, Навешивание ярлыков, Персонализация, Сверхобобщение, Ментальный фильтр
+- https://sablebuddyuniverse.com/adhd/traps/traps-11-15/ — Предсказание будущего, Преуменьшение, Туннельное зрение, Магическое мышление, Справедливый мир
+- https://sablebuddyuniverse.com/adhd/traps/traps-16-20/ — Сравнение, Минимизация усилий, Телепатия наоборот, Ложная дилемма, Проекция мотивов
+- https://sablebuddyuniverse.com/en/adhd/traps/ — overview of all 20 traps
+- https://sablebuddyuniverse.com/en/adhd/traps/traps-1-5/ — Catastrophizing, Mind Reading, Black-and-White Thinking, Discounting the Positive, Emotional Reasoning
+- https://sablebuddyuniverse.com/en/adhd/traps/traps-6-10/ — Should Statements, Labeling, Personalization, Overgeneralization, Mental Filter
+- https://sablebuddyuniverse.com/en/adhd/traps/traps-11-15/ — Fortune Telling, Minimization, Tunnel Vision, Magical Thinking, Just World Fallacy
+- https://sablebuddyuniverse.com/en/adhd/traps/traps-16-20/ — Comparison, Effort Minimization, Reverse Telepathy, False Dilemma, Motive Projection
+
+Эмоции / Emotions:
+
+- https://sablebuddyuniverse.com/adhd/emotions/ — Карта эмоций: 8 эмоций, телесные сигналы, послания
+- https://sablebuddyuniverse.com/en/adhd/emotions/ — Emotions map: 8 emotions, body signals, messages
 
 ## Позиционирование / Positioning
-- ADHD — это спектр, а не переключатель «есть/нет». Навыки работают вне зависимости от диагноза.
-- ADHD is a spectrum, not a binary. The skills work regardless of diagnosis.
-- Контент не заменяет психотерапию и не является медицинской диагностикой; это практические инструменты самопомощи.
-- Not a replacement for therapy or medical diagnosis — practical self-help tools.
+
+- ADHD — спектр особенностей, а не бинарный диагноз. Навыки полезны не только людям с ADHD, но всем.
+- ADHD is a spectrum of traits, not a binary diagnosis. The skills help not only people with ADHD but everyone.
+- Автор не врач и не психолог; сайт не ставит диагнозы и не заменяет лечение. Методы взяты из систем качества (Toyota, WCM, TPM, 5S): организация среды вместо «исправления» человека.
+- The author is not a doctor or psychologist; the site does not diagnose or replace treatment. Methods come from quality systems (Toyota, WCM, TPM, 5S): organizing the environment instead of "fixing" the person.
+- Всё бесплатно, без регистрации и сбора данных. Everything is free, no sign-up, no tracking.
+
+## Контакты и соцсети / Contacts and socials
+
+- YouTube: https://www.youtube.com/@sablebuddyuniverse
+- Instagram: https://www.instagram.com/sablebuddyuniverse
+- Telegram: https://t.me/sablebuddy
 
 ## Технические факты / Technical facts
-- URL: https://sablebuddyuniverse.com/
-- Языки: русский (по умолчанию), английский (переключатель EN в шапке) / Languages: Russian (default), English (EN toggle)
-- Бесплатно, без регистрации, без рекламы / Free, no sign-up, no ads
-- Маскот сайта — соболь Бадди / Site mascot: Buddy the sable
+
+- Маскот: соболь Бадди (Buddy the sable)
+- Статический сайт на GitHub Pages, без бэкенда
+- Sitemap: https://sablebuddyuniverse.com/sitemap.xml
