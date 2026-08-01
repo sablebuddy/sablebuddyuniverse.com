@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ADHD Toolkit - навигатор навыков при СДВГ | ADHD skills navigator</title>
-<link rel="canonical" href="https://sablebuddyuniverse.com/adhd/">
+<link rel="canonical" href="https://sablebuddyuniverse.com/en/adhd/">
 <link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/">
 <link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/">
 <link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/">
@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="ADHD Toolkit">
 <meta property="og:title" content="ADHD Toolkit - навигатор навыков при СДВГ">
 <meta property="og:description" content="Выбери проблему - получи конкретный навык с инструкцией. Таблица эмоций и 20 когнитивных ловушек с объяснениями. Бесплатно, RU/EN.">
-<meta property="og:url" content="https://sablebuddyuniverse.com/adhd/">
+<meta property="og:url" content="https://sablebuddyuniverse.com/en/adhd/">
 <meta property="og:image" content="https://sablebuddyuniverse.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:locale" content="ru_RU">
-<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ru_RU">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ADHD Toolkit - навигатор навыков при СДВГ">
@@ -506,7 +506,8 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
       </div>
       <div class="hero-text">
         <div class="title-row">
-          <h1>ADHD Toolkit</h1>
+          <h1><a href="/" id="home-link" style="color:inherit;text-decoration:none">ADHD Toolkit</a></h1>
+          <p style="margin:2px 0 0;font-size:13px;opacity:.75"><a href="/" id="home-link-2" style="color:inherit"></a></p>
         </div>
         <p id="subtitle"></p>
       </div>
@@ -653,7 +654,8 @@ const UI = {
 };
 
 /* ================= Состояние ================= */
-let LANG = localStorage.getItem('adhd-lang') || 'ru';
+let LANG = window.location.pathname.startsWith('/en/') ? 'en'
+  : (localStorage.getItem('adhd-lang') || 'ru');
 let DATA = I18N_DATA[LANG];
 let DESC = I18N_DESC[LANG];
 let T = UI[LANG];
@@ -713,6 +715,11 @@ function applyStaticTexts() {
   const tcl5 = $('#traps-cluster5-link');
   tcl5.textContent = T.trapsCluster5;
   tcl5.href = LANG === 'ru' ? '/adhd/traps/evidence/' : '/en/adhd/traps/evidence/';
+  const homeHref = LANG === 'ru' ? '/' : '/en/';
+  $('#home-link').href = homeHref;
+  const hl2 = $('#home-link-2');
+  hl2.href = homeHref;
+  hl2.textContent = LANG === 'ru' ? 'SableBuddy Universe - на главную' : 'SableBuddy Universe - home';
   $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
 }
 
@@ -1019,12 +1026,9 @@ $('#buddy').addEventListener('click', togglePreface);
 
 /* ================= Переключатель языка ================= */
 $('#lang-toggle').addEventListener('click', () => {
-  LANG = LANG === 'ru' ? 'en' : 'ru';
-  localStorage.setItem('adhd-lang', LANG);
-  DATA = I18N_DATA[LANG];
-  DESC = I18N_DESC[LANG];
-  T = UI[LANG];
-  renderAll();
+  const next = LANG === 'ru' ? 'en' : 'ru';
+  localStorage.setItem('adhd-lang', next);
+  window.location.href = next === 'en' ? '/en/adhd/' : '/adhd/';
 });
 
 renderAll();
