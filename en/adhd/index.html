@@ -552,7 +552,10 @@ h3.zone-title{font-size:1.25rem;font-weight:700;color:var(--h)}
     <h2>Когнитивные ловушки</h2>
     <p style="margin:4px 0 6px;font-size:15px">🧠 <a id="traps-article-link" href="/adhd/traps/specification/"></a></p>
     <p style="margin:0 0 6px;font-size:15px">🕳️ <a id="traps-cluster-link" href="/adhd/traps/unknown/"></a></p>
-    <p style="margin:0 0 14px;font-size:15px">✂️ <a id="traps-cluster2-link" href="/adhd/traps/binary/"></a></p>
+    <p style="margin:0 0 6px;font-size:15px">✂️ <a id="traps-cluster2-link" href="/adhd/traps/binary/"></a></p>
+    <p style="margin:0 0 6px;font-size:15px">🧮 <a id="traps-cluster3-link" href="/adhd/traps/accounting/"></a></p>
+    <p style="margin:0 0 6px;font-size:15px">🎛️ <a id="traps-cluster4-link" href="/adhd/traps/control/"></a></p>
+    <p style="margin:0 0 14px;font-size:15px">🧾 <a id="traps-cluster5-link" href="/adhd/traps/evidence/"></a></p>
     <div class="acc" id="traps-acc"></div>
   </section>
 </div>
@@ -607,6 +610,9 @@ const UI = {
     trapsArticle: 'Откуда берутся ловушки - большая статья про спецификацию мозга',
     trapsCluster: 'Мозг не выносит пустоты - пять ловушек одного механизма, новый разбор',
     trapsCluster2: 'Мозг режет мир надвое - четыре ловушки одной операции, новый разбор',
+    trapsCluster3: 'Двойная бухгалтерия - четыре ловушки одного механизма, новый разбор',
+    trapsCluster4: 'Иллюзия контроля - четыре ловушки одной сделки, новый разбор',
+    trapsCluster5: 'Реакция как доказательство - четыре ловушки одной подмены, новый разбор',
     backZones: '← К зонам', backCats: '← К проблемам',
     tagSelfTalk: 'Что ты себе говоришь', tagSkills: 'Навыки',
     tagWhatToDo: 'Что делать', tagWhy: 'Почему работает',
@@ -631,6 +637,9 @@ const UI = {
     trapsArticle: "Where cognitive traps come from - the big article about your brain's spec",
     trapsCluster: "Your brain can't stand a blank space - five traps, one mechanism, the new breakdown",
     trapsCluster2: "Your brain cuts the world in half - four traps, one operation, the new breakdown",
+    trapsCluster3: "Your brain keeps two sets of books - four traps, one mechanism, the new breakdown",
+    trapsCluster4: "The illusion of control - four traps, one trade, the new breakdown",
+    trapsCluster5: "Reaction as evidence - four traps, one substitution, the new breakdown",
     backZones: '← To zones', backCats: '← To problems',
     tagSelfTalk: 'What you tell yourself', tagSkills: 'Skills',
     tagWhatToDo: 'What to do', tagWhy: 'Why it works',
@@ -695,6 +704,15 @@ function applyStaticTexts() {
   const tcl2 = $('#traps-cluster2-link');
   tcl2.textContent = T.trapsCluster2;
   tcl2.href = LANG === 'ru' ? '/adhd/traps/binary/' : '/en/adhd/traps/binary/';
+  const tcl3 = $('#traps-cluster3-link');
+  tcl3.textContent = T.trapsCluster3;
+  tcl3.href = LANG === 'ru' ? '/adhd/traps/accounting/' : '/en/adhd/traps/accounting/';
+  const tcl4 = $('#traps-cluster4-link');
+  tcl4.textContent = T.trapsCluster4;
+  tcl4.href = LANG === 'ru' ? '/adhd/traps/control/' : '/en/adhd/traps/control/';
+  const tcl5 = $('#traps-cluster5-link');
+  tcl5.textContent = T.trapsCluster5;
+  tcl5.href = LANG === 'ru' ? '/adhd/traps/evidence/' : '/en/adhd/traps/evidence/';
   $('#lang-toggle').textContent = LANG === 'ru' ? 'EN' : 'RU';
 }
 
