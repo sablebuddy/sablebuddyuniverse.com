@@ -27,19 +27,27 @@
 - https://sablebuddyuniverse.com/en/adhd/skills/focus-and-chaos/ — Focus and chaos (23 skills)
 - https://sablebuddyuniverse.com/en/adhd/skills/emotions-and-energy/ — Emotions and energy (25 skills)
 - https://sablebuddyuniverse.com/en/adhd/skills/communication/ — Communication (12 skills)
+- https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/ — «Почему навык работает, а решимость нет»: опорная статья раздела навыков
+- https://sablebuddyuniverse.com/en/adhd/skills/how-a-skill-works/ — Why a skill works and willpower doesn't (skills pillar)
+- https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/ — «Почему "мне плохо" не помогает»: зачем называть эмоции точно
+- https://sablebuddyuniverse.com/en/adhd/emotions/naming-the-emotion/ — Why saying "I feel bad" doesn't help (emotions pillar)
 
-Когнитивные ловушки / Cognitive traps (20 traps, 4 pages of 5):
+Когнитивные ловушки / Cognitive traps (20 traps: 1 pillar + 5 clusters by mechanism):
 
-- https://sablebuddyuniverse.com/adhd/traps/ — обзор всех 20 ловушек
-- https://sablebuddyuniverse.com/adhd/traps/traps-1-5/ — Катастрофизация, Чтение мыслей, Черно-белое мышление, Обесценивание позитива, Эмоциональное обоснование
-- https://sablebuddyuniverse.com/adhd/traps/traps-6-10/ — Долженствование, Навешивание ярлыков, Персонализация, Сверхобобщение, Ментальный фильтр
-- https://sablebuddyuniverse.com/adhd/traps/traps-11-15/ — Предсказание будущего, Преуменьшение, Туннельное зрение, Магическое мышление, Справедливый мир
-- https://sablebuddyuniverse.com/adhd/traps/traps-16-20/ — Сравнение, Минимизация усилий, Телепатия наоборот, Ложная дилемма, Проекция мотивов
-- https://sablebuddyuniverse.com/en/adhd/traps/ — overview of all 20 traps
-- https://sablebuddyuniverse.com/en/adhd/traps/traps-1-5/ — Catastrophizing, Mind Reading, Black-and-White Thinking, Discounting the Positive, Emotional Reasoning
-- https://sablebuddyuniverse.com/en/adhd/traps/traps-6-10/ — Should Statements, Labeling, Personalization, Overgeneralization, Mental Filter
-- https://sablebuddyuniverse.com/en/adhd/traps/traps-11-15/ — Fortune Telling, Minimization, Tunnel Vision, Magical Thinking, Just World Fallacy
-- https://sablebuddyuniverse.com/en/adhd/traps/traps-16-20/ — Comparison, Effort Minimization, Reverse Telepathy, False Dilemma, Motive Projection
+- https://sablebuddyuniverse.com/adhd/traps/ — хаб: опорная статья и 5 кластеров по механизмам
+- https://sablebuddyuniverse.com/adhd/traps/specification/ — «Твой мозг работает по спецификации»: откуда берутся когнитивные ловушки
+- https://sablebuddyuniverse.com/adhd/traps/unknown/ — Мозг не выносит пустоты (достраивание неизвестного)
+- https://sablebuddyuniverse.com/adhd/traps/binary/ — Мозг режет мир надвое (черно-белое мышление)
+- https://sablebuddyuniverse.com/adhd/traps/accounting/ — Двойная бухгалтерия (плохое считается в другой валюте)
+- https://sablebuddyuniverse.com/adhd/traps/control/ — Иллюзия контроля (лучше виноватый я, чем случайность)
+- https://sablebuddyuniverse.com/adhd/traps/evidence/ — Реакция как доказательство (чувствую, значит правда)
+- https://sablebuddyuniverse.com/en/adhd/traps/ — hub: pillar article + 5 clusters by mechanism
+- https://sablebuddyuniverse.com/en/adhd/traps/specification/ — Your brain is working to spec
+- https://sablebuddyuniverse.com/en/adhd/traps/unknown/ — Your brain can't stand a blank space
+- https://sablebuddyuniverse.com/en/adhd/traps/binary/ — Your brain cuts the world in half
+- https://sablebuddyuniverse.com/en/adhd/traps/accounting/ — Your Brain Keeps Two Sets of Books
+- https://sablebuddyuniverse.com/en/adhd/traps/control/ — The illusion of control
+- https://sablebuddyuniverse.com/en/adhd/traps/evidence/ — Your Reaction Is Not Evidence
 
 Эмоции / Emotions:
 
