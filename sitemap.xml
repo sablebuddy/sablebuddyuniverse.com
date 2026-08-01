@@ -224,4 +224,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/traps/unknown/"/>
     <lastmod>2026-08-01</lastmod>
   </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/adhd/traps/binary/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/traps/binary/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/traps/binary/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/traps/binary/"/>
+    <lastmod>2026-08-01</lastmod>
+  </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/en/adhd/traps/binary/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/traps/binary/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/traps/binary/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/traps/binary/"/>
+    <lastmod>2026-08-01</lastmod>
+  </url>
 </urlset>
