@@ -280,4 +280,32 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/traps/evidence/"/>
     <lastmod>2026-08-02</lastmod>
   </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/skills/how-a-skill-works/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/"/>
+  </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/en/adhd/skills/how-a-skill-works/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/skills/how-a-skill-works/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/"/>
+  </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/emotions/naming-the-emotion/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/"/>
+  </url>
+  <url>
+    <loc>https://sablebuddyuniverse.com/en/adhd/emotions/naming-the-emotion/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sablebuddyuniverse.com/en/adhd/emotions/naming-the-emotion/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/"/>
+  </url>
 </urlset>
