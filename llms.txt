@@ -2,7 +2,7 @@
 
 > Вселенная SableBuddy: бесплатные материалы и инструменты о мозге, эмоциях и продуктивности. Главный проект — ADHD Toolkit, интерактивный навигатор навыков при СДВГ на двух языках (русский и английский). Сайт статический, не требует регистрации, не собирает данные.
 >
-> SableBuddy Universe: free materials and tools about the brain, emotions and productivity. The main project is ADHD Toolkit, an interactive bilingual (RU/EN) ADHD skills navigator. Static site, no sign-up, no tracking.
+> SableBuddy Universe: free materials and tools about the brain, emotions and productivity. The main project is ADHD Toolkit, an interactive bilingual (RU/EN) ADHD skills navigator. Static site, no sign-up.
 
 ## Структура сайта / Site structure
 
