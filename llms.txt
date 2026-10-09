@@ -1,75 +1,76 @@
-# SableBuddy Universe — sablebuddyuniverse.com
+# Sable Buddy Universe — sablebuddyuniverse.com
 
-> Вселенная SableBuddy: бесплатные материалы и инструменты о мозге, эмоциях и продуктивности. Главный проект — ADHD Toolkit, интерактивный навигатор навыков при СДВГ на двух языках (русский и английский). Сайт статический, не требует регистрации.
+> Sable Buddy Universe: сайт о жизни и путешествиях с настоящими питомцами — соболь Бадди, борзая Черу и кролик Бамбу. Правдивые истории из поездок, практические гайды по содержанию соболя и товары, которыми мы реально пользуемся. Двуязычный сайт (русский и английский), статический, без регистрации.
 >
-> SableBuddy Universe: free materials and tools about the brain, emotions and productivity. The main project is ADHD Toolkit, an interactive bilingual (RU/EN) ADHD skills navigator. Static site, no sign-up.
+> Sable Buddy Universe: a site about life and travel with real pets — Buddy the sable, Cheru the borzoi and Bamboo the rabbit. True travel stories, practical guides on keeping a pet sable, and things we actually use. Bilingual (RU/EN), static site, no sign-up.
 
 ## Структура сайта / Site structure
 
-- https://sablebuddyuniverse.com/ — главная (RU), зонтичная страница вселенной SableBuddy
-- https://sablebuddyuniverse.com/en/ — home page (EN)
-- https://sablebuddyuniverse.com/manifest/ — манифест «Почему этот сайт существует»: почему все навыки бесплатные, при чём тут система Toyota, WCM/TPM и принципы 5S
-- https://sablebuddyuniverse.com/en/manifest/ — manifesto "Why this site exists" (EN)
-- https://sablebuddyuniverse.com/about/ — об авторе: инженер качества, 20+ лет в WCM/TPM; «организую среду, а не лечу»
-- https://sablebuddyuniverse.com/en/about/ — about the author (EN)
-- https://sablebuddyuniverse.com/adhd/ — ADHD Toolkit: интерактивный навигатор (выбери проблему → получи навык), RU/EN внутри
-- https://sablebuddyuniverse.com/en/adhd/ — ADHD Toolkit navigator (EN entry)
+- https://sablebuddyuniverse.com/en/ — home page (EN). Real pets. Real places. True stories.
+- https://sablebuddyuniverse.com/ru/ — главная (RU). Настоящие питомцы. Настоящие места. Правдивые истории.
+- https://sablebuddyuniverse.com/en/about/ — about Natalia, the author (EN)
+- https://sablebuddyuniverse.com/ru/about/ — об авторе Наталье (RU)
+- https://sablebuddyuniverse.com/en/pet-life/ — Pet Life hub: pets, guide, articles (EN)
+- https://sablebuddyuniverse.com/ru/pet-life/ — раздел о жизни с питомцами (RU)
 
-## Статичные страницы контента / Static content pages
+## Питомцы / Pets
 
-Навыки (по зонам) / Skills (by zone):
+- https://sablebuddyuniverse.com/en/pets/buddy/ — Buddy the sable (EN)
+- https://sablebuddyuniverse.com/ru/pets/buddy/ — соболь Бадди (RU)
+- https://sablebuddyuniverse.com/en/pets/cheru/ — Cheru the borzoi (EN)
+- https://sablebuddyuniverse.com/ru/pets/cheru/ — борзая Черу (RU)
+- https://sablebuddyuniverse.com/en/pets/bamboo/ — Bamboo the rabbit (EN)
+- https://sablebuddyuniverse.com/ru/pets/bamboo/ — кролик Бамбу (RU)
+- https://sablebuddyuniverse.com/en/pets/natalia/ — Natalia, the human of the gang (EN)
+- https://sablebuddyuniverse.com/ru/pets/natalia/ — Наталия, человек в банде (RU)
 
-- https://sablebuddyuniverse.com/adhd/skills/zapusk-i-tormozhenie/ — Запуск и торможение (14 навыков)
-- https://sablebuddyuniverse.com/adhd/skills/fokus-i-haos/ — Фокус и хаос (23 навыка)
-- https://sablebuddyuniverse.com/adhd/skills/emotsii-i-energiya/ — Эмоции и энергия (25 навыков)
-- https://sablebuddyuniverse.com/adhd/skills/obschenie/ — Общение (12 навыков)
-- https://sablebuddyuniverse.com/en/adhd/skills/activation-and-braking/ — Activation and braking (14 skills)
-- https://sablebuddyuniverse.com/en/adhd/skills/focus-and-chaos/ — Focus and chaos (23 skills)
-- https://sablebuddyuniverse.com/en/adhd/skills/emotions-and-energy/ — Emotions and energy (25 skills)
-- https://sablebuddyuniverse.com/en/adhd/skills/communication/ — Communication (12 skills)
-- https://sablebuddyuniverse.com/adhd/skills/kak-ustroen-navyk/ — «Почему навык работает, а решимость нет»: опорная статья раздела навыков
-- https://sablebuddyuniverse.com/en/adhd/skills/how-a-skill-works/ — Why a skill works and willpower doesn't (skills pillar)
-- https://sablebuddyuniverse.com/adhd/emotions/nazvat-emociyu/ — «Почему "мне плохо" не помогает»: зачем называть эмоции точно
-- https://sablebuddyuniverse.com/en/adhd/emotions/naming-the-emotion/ — Why saying "I feel bad" doesn't help (emotions pillar)
+## Гид и статьи о соболе / Sable guide and articles
 
-Когнитивные ловушки / Cognitive traps (20 traps: 1 pillar + 5 clusters by mechanism):
+- https://sablebuddyuniverse.com/en/guides/living-with-a-sable/ — Living with a Sable: the big practical guide (EN)
+- https://sablebuddyuniverse.com/ru/guides/soderzhanie-sobolya/ — «Жизнь с соболем»: большой практический гид (RU)
+- https://sablebuddyuniverse.com/en/articles/should-you-get-a-pet-sable/ — Should You Get a Pet Sable? Honest Pros and Cons (EN)
+- https://sablebuddyuniverse.com/ru/articles/stoit-li-zavodit-sobolya/ — «Стоит ли заводить соболя»: честные плюсы и минусы (RU)
+- https://sablebuddyuniverse.com/en/articles/where-to-buy-a-sable/ — Where and When to Buy a Sable (EN)
+- https://sablebuddyuniverse.com/ru/articles/gde-i-kogda-kupit-sobolya/ — «Где и когда купить соболя» (RU)
+- https://sablebuddyuniverse.com/en/articles/sable-faq/ — Sable FAQ: Biting, Toilet, Other Pets, One or Two, Age (EN)
+- https://sablebuddyuniverse.com/ru/articles/chastye-voprosy-o-sobole/ — «Частые вопросы о соболях» (RU)
 
-- https://sablebuddyuniverse.com/adhd/traps/ — хаб: опорная статья и 5 кластеров по механизмам
-- https://sablebuddyuniverse.com/adhd/traps/specification/ — «Твой мозг работает по спецификации»: откуда берутся когнитивные ловушки
-- https://sablebuddyuniverse.com/adhd/traps/unknown/ — Мозг не выносит пустоты (достраивание неизвестного)
-- https://sablebuddyuniverse.com/adhd/traps/binary/ — Мозг режет мир надвое (черно-белое мышление)
-- https://sablebuddyuniverse.com/adhd/traps/accounting/ — Двойная бухгалтерия (плохое считается в другой валюте)
-- https://sablebuddyuniverse.com/adhd/traps/control/ — Иллюзия контроля (лучше виноватый я, чем случайность)
-- https://sablebuddyuniverse.com/adhd/traps/evidence/ — Реакция как доказательство (чувствую, значит правда)
-- https://sablebuddyuniverse.com/en/adhd/traps/ — hub: pillar article + 5 clusters by mechanism
-- https://sablebuddyuniverse.com/en/adhd/traps/specification/ — Your brain is working to spec
-- https://sablebuddyuniverse.com/en/adhd/traps/unknown/ — Your brain can't stand a blank space
-- https://sablebuddyuniverse.com/en/adhd/traps/binary/ — Your brain cuts the world in half
-- https://sablebuddyuniverse.com/en/adhd/traps/accounting/ — Your Brain Keeps Two Sets of Books
-- https://sablebuddyuniverse.com/en/adhd/traps/control/ — The illusion of control
-- https://sablebuddyuniverse.com/en/adhd/traps/evidence/ — Your Reaction Is Not Evidence
+## Истории из путешествий / Travel stories
 
-Эмоции / Emotions:
+- https://sablebuddyuniverse.com/en/stories/ — all stories (EN)
+- https://sablebuddyuniverse.com/ru/stories/ — все истории (RU)
+- Series «The Celtic Curse» / Серия «Кельтское проклятие»: Barnenez cairn (ep. 1) → Menhir des Marsouins (ep. 2)
+- https://sablebuddyuniverse.com/en/stories/mont-saint-michel-killer-with-a-schedule/ — Mont-Saint-Michel (EN)
+- https://sablebuddyuniverse.com/ru/stories/mon-sen-mishel-ubijca-po-raspisaniju/ — Мон-Сен-Мишель (RU)
+- https://sablebuddyuniverse.com/en/stories/village-des-bories/ — The Village of Bories (EN)
+- https://sablebuddyuniverse.com/ru/stories/derevnya-bori/ — Деревня Бори (RU)
+- https://sablebuddyuniverse.com/en/stories/rosette-tamisier-luberon-miracle/ — Rosette Tamisier and the Villages of Luberon (EN)
+- https://sablebuddyuniverse.com/ru/stories/rozett-tamizye-i-derevni-lyuberona/ — Розетт Тамизье и деревни Люберона (RU)
 
-- https://sablebuddyuniverse.com/adhd/emotions/ — Карта эмоций: 8 эмоций, телесные сигналы, послания
-- https://sablebuddyuniverse.com/en/adhd/emotions/ — Emotions map: 8 emotions, body signals, messages
+## Путешествия с питомцами / Adventures
 
-## Позиционирование / Positioning
+- https://sablebuddyuniverse.com/en/adventures/travelling-with-pets/ — Travelling with Pets (EN)
+- https://sablebuddyuniverse.com/ru/adventures/puteshestviya-s-pitomcami/ — Путешествия с питомцами (RU)
+- https://sablebuddyuniverse.com/en/adventures/buddy-on-the-road/ — Buddy on the Road (EN)
+- https://sablebuddyuniverse.com/ru/adventures/baddy-v-puti/ — Бадди в пути (RU)
+- https://sablebuddyuniverse.com/en/adventures/hiking-with-cheru/ — Hiking with Cheru (EN only)
 
-- ADHD — спектр особенностей, а не бинарный диагноз. Навыки полезны не только людям с ADHD, но всем.
-- ADHD is a spectrum of traits, not a binary diagnosis. The skills help not only people with ADHD but everyone.
-- Автор не врач и не психолог; сайт не ставит диагнозы и не заменяет лечение. Методы взяты из систем качества (Toyota, WCM, TPM, 5S): организация среды вместо «исправления» человека.
-- The author is not a doctor or psychologist; the site does not diagnose or replace treatment. Methods come from quality systems (Toyota, WCM, TPM, 5S): organizing the environment instead of "fixing" the person.
-- Всё бесплатно, без регистрации. Everything is free, no sign-up.
+## Магазин / Shop
+
+- https://sablebuddyuniverse.com/en/shop/ — things we actually use: pet gear and travel gear, with honest pros and cons (EN)
+- https://sablebuddyuniverse.com/ru/shop/ — товары, которыми мы реально пользуемся: для питомцев и для путешествий, с честными плюсами и минусами (RU)
+- Product links are affiliate links to Amazon.
 
 ## Контакты и соцсети / Contacts and socials
 
-- YouTube: https://www.youtube.com/@sablebuddyuniverse
+- YouTube: https://www.youtube.com/@BuddyPositive
 - Instagram: https://www.instagram.com/sablebuddyuniverse
+- TikTok: https://www.tiktok.com/@sablebuddyuniverse
 - Telegram: https://t.me/sablebuddy
 
 ## Технические факты / Technical facts
 
 - Маскот: соболь Бадди (Buddy the sable)
+- Bilingual RU/EN with hreflang alternates; every page exists at a trailing-slash URL
 - Статический сайт на GitHub Pages, без бэкенда
 - Sitemap: https://sablebuddyuniverse.com/sitemap.xml
